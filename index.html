@@ -48,27 +48,50 @@
             <h2>Sản Phẩm Của Hoàng Gia Trang</h2>
             <div class="product-list">
                 <div class="product">
-                    <img src="images/gachoi1.jpg" alt="Gà Chọi Con Giống 1" style="width: 100%; height: auto;">
-                    <h3>Gà Chọi Con Giống 1</h3>
-                    <p>Giống gà khỏe mạnh, dễ nuôi, sẵn sàng chiến đấu!</p>
-                    <button class="cta-button">Liên Hệ Mua</button>
+                    <img src="images/gachoi1.jpg" alt="Gà Chọi Con Giống 1 Tuần tuổi" style="width: 100%; height: auto;">
+                    <h3>Gà Chọi Con Giống 1 Tuần tuổi</h3>
+                    <p>Giống gà khỏe mạnh, dễ nuôi, đã được vào lasota</p>
+                    <button class="cta-button" onclick="openContactModal()">Liên Hệ Mua</button>
                 </div>
                 <div class="product">
-                    <img src="images/gachoi2.jpg" alt="Gà Chọi Con Giống 2" style="width: 100%; height: auto;">
-                    <h3>Gà Chọi Con Giống 2</h3>
+                    <img src="images/gachoi2.jpg" alt="Gà Chọi Con Giống 20 Ngày tuổi" style="width: 100%; height: auto;">
+                    <h3>Gà Chọi Con Giống 20 Ngày tuổi</h3>
                     <p>Giống gà chọi nổi tiếng, sức mạnh vượt trội!</p>
-                    <button class="cta-button">Liên Hệ Mua</button>
+                    <button class="cta-button" onclick="openContactModal()">Liên Hệ Mua</button>
                 </div>
                 <div class="product">
-                    <img src="images/gachoi3.jpg" alt="Gà Chọi Con Giống 3" style="width: 100%; height: auto;">
-                    <h3>Gà Chọi Con Giống 3</h3>
+                    <img src="images/gachoi3.jpg" alt="Gà Chọi Con Giống 3 Tháng tuổi" style="width: 100%; height: auto;">
+                    <h3>Gà Chọi Con Giống 3 Tháng tuổi</h3>
                     <p>Gà chiến đấu mạnh mẽ, sức khỏe dẻo dai!</p>
-                    <button class="cta-button">Liên Hệ Mua</button>
+                    <button class="cta-button" onclick="openContactModal()">Liên Hệ Mua</button>
                 </div>
             </div>
         </div>
     </section>
 
+     <!-- Modal (Popup) Chọn Kênh Liên Hệ -->
+     <div id="contact-modal" style="display: none;">
+      <div class="modal-content">
+         <h2>Chọn Kênh Liên Hệ</h2>
+         <button onclick="window.location.href='https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN'">Liên Hệ Qua Facebook</button>
+         <button onclick="window.location.href='https://zalo.me/yourzalo'">Liên Hệ Qua Zalo</button>
+         <button onclick="window.location.href='tel:+84359195743'">Gọi: +84 359195743</button>
+         <button onclick="closeModal()">Đóng</button>
+      </div>
+     </div>
+
+     <script>
+        // Hàm mở modal khi bấm vào nút "Liên Hệ Mua"
+        function openContactModal() {
+            document.getElementById('contact-modal').style.display = 'block';
+        }
+    
+        // Hàm đóng modal
+        function closeModal() {
+            document.getElementById('contact-modal').style.display = 'none';
+        }
+    </script>
+    
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
@@ -76,9 +99,9 @@
             <!-- Liên kết trực tiếp -->
             <div id="contact-links">
                 <ul>
-                    <li><a href="https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN" target="_blank">Facebook</a></li>
-                    <li><a href="https://zalo.me/yourzalo" target="_blank">Zalo</a></li>
-                    <li><a href="tel:+84359195743">Gọi: +84 359195743</a></li>
+                    <li class="inline"><a href="https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN" target="_blank">Facebook</a></li>
+                    <li class="inline"><a href="https://zalo.me/yourzalo" target="_blank">Zalo</a></li>
+                    <li><a href="tel:+84359195743">Số điện thoại liên hệ: +84 359195743</a></li>
                 </ul>
             </div>
         </div>
@@ -109,7 +132,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 Hoàng Gia Trang Cung Cấp Gà Chọi Con Giống. Bản quyền được bảo vệ.</p>
+            <p>&copy; 2024 Hoàng Gia Trang Cung Cấp Gà Chọi Con Giống. Mọi hình ảnh đều được bảo vệ bản quyền.</p>
         </div>
     </footer>
 
