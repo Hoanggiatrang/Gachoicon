@@ -17,6 +17,7 @@ body {
     margin: auto;
 }
 
+/* Header */
 header {
     background: #333;
     color: #fff;
@@ -43,10 +44,6 @@ nav ul li a {
     text-decoration: none;
     color: white;
     font-size: 1.2em;
-}
-
-section {
-    padding: 50px 0;
 }
 
 /* Hero Section */
@@ -87,12 +84,44 @@ section {
     background-color: #e55347; /* Màu nền của nút khi hover */
 }
 
-/* Section Product */
+/* About Section */
+#about {
+    padding: 50px 0;
+    background-color: #fff;
+}
+
+#about h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+}
+
+#about p {
+    text-align: center;
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Product Section */
+#products {
+    padding: 50px 0;
+    background-color: #fff;
+}
+
+#products h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+}
+
 #products .product-list {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 20px; /* Khoảng cách giữa các sản phẩm */
+    gap: 20px;
 }
 
 #products .product {
@@ -101,14 +130,13 @@ section {
     padding: 20px;
     text-align: center;
     width: 30%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Điều chỉnh kích thước hình ảnh */
 #products .product img {
     width: 100%;
-    max-width: 100%; /* Đảm bảo ảnh không vượt quá container */
-    height: auto; /* Giữ tỷ lệ khung hình */
+    max-width: 100%;
+    height: auto;
     border-radius: 8px;
     margin-bottom: 15px;
 }
@@ -116,13 +144,98 @@ section {
 /* Media Query cho màn hình nhỏ */
 @media (max-width: 768px) {
     #products .product-list {
-        flex-direction: column; /* Xếp dọc sản phẩm */
+        flex-direction: column;
         align-items: center;
     }
 
     #products .product {
-        width: 100%; /* Sản phẩm chiếm toàn bộ chiều rộng */
+        width: 100%;
     }
+}
+
+/* Contact Section */
+#contact {
+    padding: 50px 0;
+    background-color: #f5f5f5;
+}
+
+#contact h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+}
+
+#contact p {
+    text-align: center;
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#contact-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#contact-form input,
+#contact-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#contact-form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+#contact-form button:hover {
+    background-color: #e55347;
+}
+
+#contact-links {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#contact-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+#contact-links ul li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+#contact-links ul li a {
+    text-decoration: none;
+    color: #ff6347;
+    font-size: 1.2em;
+}
+
+#contact-links ul li a:hover {
+    color: #e55347;
 }
 
 /* Footer */
@@ -131,4 +244,8 @@ footer {
     color: white;
     text-align: center;
     padding: 20px 0;
+}
+
+footer p {
+    margin: 0;
 }
