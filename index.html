@@ -72,15 +72,39 @@
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <h2>Liên Hệ</h2>
-            <p>Để mua gà chọi con giống, vui lòng liên hệ với Hoàng Gia Trang qua thông tin dưới đây:</p>
-            <address>
-                <p>Email: <a href="hoanggiatrangalhp@gmail.com">hoanggiatrangalhp@gmail.com</a></p>
-                <p>Điện thoại: <a href="tel:+84 359195743">+84 359195743</a></p>
-                <p>Facebook : <a href="https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN">https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN</a></p>
-            </address>
+            <h2>Liên hệ để được hỗ trợ tư vấn trực tiếp</h2>
+            <!-- Liên kết trực tiếp -->
+            <div id="contact-links">
+                <ul>
+                    <li><a href="https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN" target="_blank">Facebook</a></li>
+                    <li><a href="https://zalo.me/yourzalo" target="_blank">Zalo</a></li>
+                    <li><a href="tel:+84359195743">Gọi: +84 359195743</a></li>
+                </ul>
+            </div>
         </div>
     </section>
+
+    <script>
+        document.getElementById("contact-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Ngừng gửi form mặc định
+
+            const channel = document.getElementById("channel").value;
+
+            let contactLink = "";
+
+            // Chuyển hướng tới kênh liên lạc đã chọn
+            if (channel === "facebook") {
+                contactLink = "https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN"; // Link đến Facebook
+            } else if (channel === "zalo") {
+                contactLink = "https://zalo.me/yourzalo"; // Link đến Zalo
+            } else if (channel === "phone") {
+                contactLink = "tel:+84359195743"; // Số điện thoại
+            }
+
+            // Chuyển hướng đến kênh liên lạc đã chọn
+            window.location.href = contactLink;
+        });
+    </script>
 
     <!-- Footer -->
     <footer>
