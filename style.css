@@ -109,6 +109,12 @@ section {
     margin-bottom: 15px;
 }
 
+#products .product img {
+    width: 100%;  /* Đảm bảo ảnh sẽ chiếm toàn bộ chiều rộng của phần tử chứa */
+    max-width: 100%; /* Đảm bảo ảnh không vượt quá chiều rộng phần tử */
+    height: auto; /* Đảm bảo tỷ lệ khung hình được giữ nguyên */
+}
+
 /* Footer */
 footer {
     background-color: #333;
