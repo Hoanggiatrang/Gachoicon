@@ -1,9 +1,9 @@
-// Xử lý sự kiện gửi form
-document.querySelector('form').addEventListener('submit', function (event) {
-    event.preventDefault(); // Ngăn chặn form gửi dữ liệu mặc định
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
+document.addEventListener("DOMContentLoaded", function() {
+    const buyButtons = document.querySelectorAll(".cta-button");
 
-    // Hiển thị thông báo khi form được gửi
-    alert(`Thank you, ${name}! We will contact you at ${email}.`);
+    buyButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            alert("Cảm ơn bạn đã quan tâm! Chúng tôi sẽ liên hệ với bạn ngay.");
+        });
+    });
 });

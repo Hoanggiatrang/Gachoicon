@@ -1,56 +1,104 @@
-/* Reset mặc định */
-body, h1, h2, p, ul, li {
+/* Cấu trúc cơ bản của trang */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-/* Định dạng cơ bản */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
-    padding: 10px;
 }
 
-/* Header */
+.container {
+    width: 80%;
+    margin: auto;
+}
+
 header {
     background: #333;
     color: #fff;
-    padding: 10px 0;
-    text-align: center;
+    padding: 20px 0;
 }
 
-/* Navigation */
+header h1 {
+    text-align: center;
+    font-size: 2.5em;
+}
+
 nav ul {
-    list-style: none;
-    background: #555;
-    padding: 10px;
     display: flex;
     justify-content: center;
+    margin-top: 10px;
 }
 
 nav ul li {
-    margin: 0 10px;
+    list-style: none;
+    margin: 0 15px;
 }
 
 nav ul li a {
-    color: #fff;
     text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background 0.3s;
+    color: white;
+    font-size: 1.2em;
 }
 
-nav ul li a:hover {
-    background: #333;
+section {
+    padding: 50px 0;
 }
 
-/* Sections */
-main section {
-    background: #fff;
-    margin: 10px 0;
+#hero {
+    background: url('images/gachoi-banner.jpg') no-repeat center center/cover;
+    height: 400px;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#hero h2 {
+    font-size: 3em;
+}
+
+.cta-button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 20px;
+    text-decoration: none;
+}
+
+#products .product-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#products .product {
+    background: white;
+    border-radius: 8px;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 30%;
+    margin: 10px 0;
+}
+
+#products .product img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
 }
