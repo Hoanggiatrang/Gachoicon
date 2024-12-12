@@ -49,32 +49,45 @@ section {
     padding: 50px 0;
 }
 
+/* Hero Section */
 #hero {
-    background: url('images/gachoi-banner.jpg') no-repeat center center/cover;
-    height: 400px;
-    color: white;
+    background-color: #f5f5f5; /* Màu nền của Hero */
+    color: #333; /* Màu chữ trong phần Hero */
+    padding: 50px 0;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
-#hero h2 {
-    font-size: 3em;
+.hero-text h2 {
+    font-size: 36px;
+    color: #ff6347; /* Màu của tiêu đề */
 }
 
+.hero-text p {
+    font-size: 18px;
+    color: #555; /* Màu của đoạn văn */
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Nút CTA */
 .cta-button {
-    background-color: #e74c3c;
-    color: white;
+    background-color: #ff6347; /* Màu nền của nút */
+    color: white; /* Màu chữ trên nút */
     padding: 10px 20px;
-    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: inline-block;
     text-transform: uppercase;
     cursor: pointer;
-    font-size: 1.1em;
-    margin-top: 20px;
-    text-decoration: none;
 }
 
+.cta-button:hover {
+    background-color: #e55347; /* Màu nền của nút khi hover */
+}
+
+/* Section Product */
 #products .product-list {
     display: flex;
     justify-content: space-between;
@@ -96,6 +109,7 @@ section {
     margin-bottom: 15px;
 }
 
+/* Footer */
 footer {
     background-color: #333;
     color: white;
