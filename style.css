@@ -92,6 +92,7 @@ section {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    gap: 20px; /* Khoảng cách giữa các sản phẩm */
 }
 
 #products .product {
@@ -100,19 +101,28 @@ section {
     padding: 20px;
     text-align: center;
     width: 30%;
-    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
 }
 
+/* Điều chỉnh kích thước hình ảnh */
 #products .product img {
     width: 100%;
+    max-width: 100%; /* Đảm bảo ảnh không vượt quá container */
+    height: auto; /* Giữ tỷ lệ khung hình */
     border-radius: 8px;
     margin-bottom: 15px;
 }
 
-#products .product img {
-    width: 100%;  /* Đảm bảo ảnh sẽ chiếm toàn bộ chiều rộng của phần tử chứa */
-    max-width: 100%; /* Đảm bảo ảnh không vượt quá chiều rộng phần tử */
-    height: auto; /* Đảm bảo tỷ lệ khung hình được giữ nguyên */
+/* Media Query cho màn hình nhỏ */
+@media (max-width: 768px) {
+    #products .product-list {
+        flex-direction: column; /* Xếp dọc sản phẩm */
+        align-items: center;
+    }
+
+    #products .product {
+        width: 100%; /* Sản phẩm chiếm toàn bộ chiều rộng */
+    }
 }
 
 /* Footer */
