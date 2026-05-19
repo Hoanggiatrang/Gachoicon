@@ -27,12 +27,16 @@ body{
 
 /* HEADER */
 
-header{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    z-index:999;
+.header-container{
+    width: 95%;
+    max-width: 1400px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
 
     background:rgba(255,255,255,0.92);
     backdrop-filter:blur(10px);
