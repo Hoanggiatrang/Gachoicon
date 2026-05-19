@@ -45,15 +45,13 @@ header{
     left:0;
     width:100%;
 
-    background:rgba(255,255,255,0.95);
+    background:rgba(255,255,255,0.96);
 
     backdrop-filter:blur(10px);
-    z-index: 999;
+    z-index: 1000;
 
     box-shadow:
-    0 2px 20px rgba(0,0,0,0.08);
-
-    z-index:999;
+    0 2px 15px rgba(0,0,0,0.08);
 }
 
 .header-container{
@@ -66,14 +64,15 @@ header{
     align-items:center;
     justify-content:space-between;
 
-    padding:10px 0;
+    padding:12px 0;
 }
 body{
     padding-top: 110px;
 }
 .logo img{
-    height:90px;
+    height:120px;
     width:auto;
+    display: block;
     object-fit:contain;
 }
 
