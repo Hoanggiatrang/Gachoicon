@@ -1,297 +1,345 @@
-/* Cấu trúc cơ bản của trang */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* RESET */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
+html{
+    scroll-behavior:smooth;
 }
 
-.container {
-    width: 80%;
-    margin: auto;
+body{
+    font-family:'Roboto',sans-serif;
+    background:#f6f7f2;
+    color:#222;
+    overflow-x:hidden;
 }
 
-/* Header */
-header {
-    background: #333;
-    color: #fff;
-    padding: 20px 0;
+/* CONTAINER */
+
+.container{
+    width:90%;
+    max-width:1300px;
+    margin:auto;
 }
 
-header h1 {
-    text-align: center;
-    font-size: 2.5em;
+/* HEADER */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:999;
+
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(10px);
+
+    box-shadow:0 2px 20px rgba(0,0,0,0.05);
 }
 
-nav ul {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+.nav-container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
 }
 
-nav ul li {
-    list-style: none;
-    margin: 0 15px;
+.logo img{
+    height:85px;
 }
 
-nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.2em;
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:40px;
 }
 
-/* Hero Section */
-#hero {
-    background-color: #f5f5f5; /* Màu nền của Hero */
-    color: #333; /* Màu chữ trong phần Hero */
-    padding: 50px 0;
-    text-align: center;
+nav ul li a{
+    text-decoration:none;
+    color:#333;
+    font-weight:600;
+    font-size:17px;
+    transition:0.3s;
+    position:relative;
 }
 
-.hero-text h2 {
-    font-size: 36px;
-    color: #ff6347; /* Màu của tiêu đề */
+nav ul li a:hover{
+    color:#3f7d32;
 }
 
-.hero-text p {
-    font-size: 18px;
-    color: #555; /* Màu của đoạn văn */
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto;
+nav ul li a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-8px;
+    width:0;
+    height:2px;
+    background:#3f7d32;
+    transition:0.3s;
 }
 
-/* Nút CTA */
-.cta-button {
-    background-color: #ff6347; /* Màu nền của nút */
-    color: white; /* Màu chữ trên nút */
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    display: inline-block;
-    text-transform: uppercase;
-    cursor: pointer;
+nav ul li a:hover::after{
+    width:100%;
 }
 
-.cta-button:hover {
-    background-color: #e55347; /* Màu nền của nút khi hover */
+/* HERO */
+
+#hero{
+    height:100vh;
+
+    background:url('images/banner.jpg') center center/cover no-repeat;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    position:relative;
 }
 
-/* CSS cho Modal */
-#contact-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
-    display: none; /* Ẩn modal mặc định */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Đảm bảo modal luôn hiển thị trên các phần tử khác */
+/* ABOUT */
+
+#about{
+    padding:120px 0 80px;
+    background:#fff;
 }
 
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    text-align: center;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 400px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.section-title{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:30px;
+    color:#2d5a27;
 }
 
-.modal-content button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 15px;
-    font-size: 16px;
-    background-color: #ff6347;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.section-desc{
+    text-align:center;
+    max-width:900px;
+    margin:auto;
+    font-size:20px;
+    line-height:1.9;
+    color:#555;
 }
 
-.modal-content button:hover {
-    background-color: #e55347;
+/* PRODUCTS */
+
+#products{
+    padding:100px 0;
+    background:#f6f7f2;
 }
 
-/* About Section */
-#about {
-    padding: 50px 0;
-    background-color: #fff;
+.product-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:35px;
+    margin-top:60px;
 }
 
-#about h2 {
-    text-align: center;
-    font-size: 2em;
-    color: #333;
+.product{
+    background:#fff;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.08);
+
+    transition:0.4s;
 }
 
-#about p {
-    text-align: center;
-    font-size: 1.2em;
-    color: #555;
-    line-height: 1.6;
-    max-width: 800px;
-    margin: 20px auto;
+.product:hover{
+    transform:translateY(-10px);
+    box-shadow:
+    0 20px 40px rgba(0,0,0,0.12);
 }
 
-/* Product Section */
-#products {
-    padding: 50px 0;
-    background-color: #fff;
+.product img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+
+    transition:0.5s;
 }
 
-#products h2 {
-    text-align: center;
-    font-size: 2em;
-    color: #333;
+.product:hover img{
+    transform:scale(1.05);
 }
 
-#products .product-list {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
+.product-content{
+    padding:25px;
 }
 
-#products .product {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    width: 30%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.product h3{
+    font-size:26px;
+    margin-bottom:15px;
+    color:#2d5a27;
 }
 
-#products .product img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 15px;
+.product p{
+    color:#666;
+    line-height:1.7;
+    margin-bottom:25px;
 }
 
-/* Media Query cho màn hình nhỏ */
-@media (max-width: 768px) {
-    #products .product-list {
-        flex-direction: column;
-        align-items: center;
+/* BUTTON */
+
+.cta-button{
+    display:inline-block;
+
+    background:linear-gradient(
+        135deg,
+        #4ba941,
+        #2d7a25
+    );
+
+    color:#fff;
+
+    padding:14px 30px;
+
+    border-radius:999px;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:0.3s;
+}
+
+.cta-button:hover{
+    transform:translateY(-3px);
+    box-shadow:
+    0 10px 20px rgba(52,140,45,0.3);
+}
+
+/* GALLERY */
+
+#gallery{
+    padding:100px 0;
+    background:#fff;
+}
+
+.gallery-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:25px;
+
+    margin-top:50px;
+}
+
+.gallery-grid img{
+    width:100%;
+    height:260px;
+
+    object-fit:cover;
+
+    border-radius:22px;
+
+    transition:0.4s;
+
+    cursor:pointer;
+}
+
+.gallery-grid img:hover{
+    transform:scale(1.03);
+}
+
+/* CONTACT */
+
+#contact{
+    padding:100px 0;
+    background:
+    linear-gradient(
+        135deg,
+        #2f5f28,
+        #447d3b
+    );
+
+    color:white;
+}
+
+#contact h2{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:20px;
+}
+
+#contact p{
+    text-align:center;
+    font-size:18px;
+    margin-bottom:40px;
+}
+
+#contact-links{
+    text-align:center;
+}
+
+#contact-links a{
+    display:inline-block;
+
+    margin:10px;
+
+    background:white;
+
+    color:#2f5f28;
+
+    text-decoration:none;
+
+    padding:15px 28px;
+
+    border-radius:999px;
+
+    font-weight:700;
+
+    transition:0.3s;
+}
+
+#contact-links a:hover{
+    transform:translateY(-3px);
+}
+
+/* FOOTER */
+
+footer{
+    background:#1d1d1d;
+    color:#aaa;
+    text-align:center;
+    padding:30px 0;
+    font-size:15px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .nav-container{
+        flex-direction:column;
+        gap:15px;
     }
 
-    #products .product {
-        width: 100%;
+    nav ul{
+        gap:20px;
+        flex-wrap:wrap;
+        justify-content:center;
     }
-}
 
-/* Contact Section */
-#contact {
-    padding: 50px 0;
-    background-color: #f5f5f5;
-}
+    .logo img{
+        height:65px;
+    }
 
-#contact h2 {
-    text-align: center;
-    font-size: 2em;
-    color: #333;
-}
+    #hero{
+        height:70vh;
+    }
 
-#contact p {
-    text-align: center;
-    font-size: 1.2em;
-    color: #555;
-    line-height: 1.6;
-    max-width: 800px;
-    margin: 20px auto;
-}
+    .section-title{
+        font-size:32px;
+    }
 
-#contact-form {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#contact-form label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-#contact-form input,
-#contact-form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-#contact-form button {
-    width: 100%;
-    padding: 15px;
-    background-color: #ff6347;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-transform: uppercase;
-}
-
-#contact-form button:hover {
-    background-color: #e55347;
-}
-
-#contact-links {
-    text-align: center;
-    margin-top: 30px;
-}
-
-#contact-links ul { 
-    list-style: none; /* Bỏ dấu chấm trong danh sách */
-    padding: 0; /* Xóa bỏ khoảng cách padding mặc định */
-    margin: 0; /* Xóa bỏ margin của ul */
-}
-
-#contact-links li {
-    margin-bottom: 10px; /* Tạo khoảng cách giữa các item */
-}
-
-#contact-links li.inline {
-    display: inline-block; /* Để Facebook và Zalo hiển thị trên cùng một dòng */
-    margin-right: 20px; /* Khoảng cách giữa các mục */
-}
-
-#contact-links ul li a {
-    text-decoration: none;
-    color: #ff6347;
-    font-size: 1.2em;
-}
-
-#contact-links ul li a:hover {
-    color: #e55347;
-}
-
-/* Footer */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer p {
-    margin: 0;
+    .section-desc{
+        font-size:17px;
+    }
 }
