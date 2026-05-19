@@ -136,7 +136,7 @@ nav ul li a:hover::after{
 
 #hero{
     width:100%;
-    min-height:100vh;
+    height:100vh;
 
     background-image:url('images/banner.png');
 
