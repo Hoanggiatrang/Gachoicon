@@ -4,108 +4,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Hoàng Gia Trang Farm</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <style>
+
+        /* RESET */
+
         *{
             margin:0;
             padding:0;
             box-sizing:border-box;
         }
 
+        html{
+            scroll-behavior:smooth;
+        }
+
         body{
-            font-family:Roboto,sans-serif;
-            background:#f5f5f5;
+            font-family:'Roboto',sans-serif;
+            background:#f5f5f0;
             color:#333;
+            overflow-x:hidden;
             line-height:1.6;
         }
 
-      TXTheader{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
+        img{
+            max-width:100%;
+            display:block;
+        }
 
-    background:rgba(255,255,255,0.92);
-
-    backdrop-filter:blur(10px);
-
-    box-shadow:0 2px 20px rgba(0,0,0,0.08);
-
-    z-index:999;
-}
+        a{
+            text-decoration:none;
+        }
 
         .container{
             width:90%;
-            max-width:1200px;
+            max-width:1300px;
             margin:auto;
         }
 
-        header .container{
+        /* HEADER */
+
+        header{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+
+            background:rgba(255,255,255,0.92);
+
+            backdrop-filter:blur(10px);
+
+            box-shadow:0 2px 20px rgba(0,0,0,0.08);
+
+            z-index:999;
+        }
+
+        .header-container{
+            width:90%;
+            max-width:1400px;
+            margin:auto;
+
             display:flex;
-            justify-content:space-between;
             align-items:center;
+            justify-content:space-between;
+
+            padding:10px 0;
+        }
+
+        .logo img{
+            height:55px;
+            width:auto;
+            object-fit:contain;
         }
 
         nav ul{
             display:flex;
+            align-items:center;
+            gap:40px;
             list-style:none;
-            gap:20px;
         }
 
-        nav a{
-            color:white;
-            text-decoration:none;
-            font-weight:bold;
+        nav ul li a{
+            color:#2c2c2c;
+            font-size:17px;
+            font-weight:700;
+            position:relative;
+            transition:0.3s;
         }
+
+        nav ul li a:hover{
+            color:#3f7d32;
+        }
+
+        nav ul li a::after{
+            content:'';
+            position:absolute;
+            left:0;
+            bottom:-8px;
+
+            width:0;
+            height:2px;
+
+            background:#3f7d32;
+
+            transition:0.3s;
+        }
+
+        nav ul li a:hover::after{
+            width:100%;
+        }
+
+        /* HERO */
 
         #hero{
-            height:85vh;
-            background: url('images/banner.png') center center/contain no-repeat;
+            width:100%;
+            height:100vh;
+
+            background:url('images/banner.png') center center/cover no-repeat;
+
+            position:relative;
+
+            margin-top:75px;
+        }
+
+        #hero::before{
+            content:'';
+            position:absolute;
+            inset:0;
+
+            background:
+            linear-gradient(
+                rgba(0,0,0,0.18),
+                rgba(0,0,0,0.15)
+            );
+        }
+
+        .hero-content{
+            position:relative;
+            z-index:2;
+
+            width:100%;
+            height:100%;
+
             display:flex;
             justify-content:center;
             align-items:center;
+            flex-direction:column;
+
             text-align:center;
             color:white;
-            position:relative;
-        }
-        
-        .hero-content{
-            position:relative;
-            z-index:1;
-            max-width:800px;
+
             padding:20px;
         }
 
         .hero-content h1{
-            font-size:52px;
+            font-size:68px;
             margin-bottom:20px;
+
+            text-shadow:
+            0 4px 20px rgba(0,0,0,0.35);
         }
 
         .hero-content p{
-            font-size:20px;
-            margin-bottom:30px;
+            font-size:22px;
+            max-width:850px;
+
+            text-shadow:
+            0 2px 10px rgba(0,0,0,0.35);
         }
 
-        .btn{
-            display:inline-block;
-            padding:14px 28px;
-            background:#66bb6a;
-            color:white;
-            text-decoration:none;
-            border-radius:8px;
-            font-weight:bold;
-            transition:0.3s;
-        }
-
-        .btn:hover{
-            background:#43a047;
-        }
+        /* SECTION */
 
         section{
-            padding:70px 0;
+            padding:100px 0;
         }
 
         .section-title{
@@ -114,252 +189,511 @@
         }
 
         .section-title h2{
-            font-size:38px;
-            color:#2e7d32;
+            font-size:42px;
+            color:#2d5a27;
+            margin-bottom:15px;
         }
 
-        .about{
-            text-align:center;
-            max-width:900px;
-            margin:auto;
+        .section-title p{
+            color:#666;
             font-size:18px;
+        }
+
+        /* ABOUT */
+
+        #about{
+            background:#fff;
+        }
+
+        .about-content{
+            max-width:950px;
+            margin:auto;
+
+            text-align:center;
+
+            font-size:20px;
+            line-height:1.9;
+            color:#555;
+        }
+
+        /* PRODUCTS */
+
+        #products{
+            background:#f7f8f2;
         }
 
         .products{
             display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-            gap:25px;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(280px,1fr));
+
+            gap:35px;
         }
 
         .card{
             background:white;
-            border-radius:12px;
+
+            border-radius:24px;
+
             overflow:hidden;
-            box-shadow:0 4px 10px rgba(0,0,0,0.1);
-            transition:0.3s;
+
+            box-shadow:
+            0 10px 30px rgba(0,0,0,0.08);
+
+            transition:0.4s;
         }
 
         .card:hover{
-            transform:translateY(-5px);
+            transform:translateY(-10px);
+
+            box-shadow:
+            0 20px 40px rgba(0,0,0,0.12);
         }
 
         .card img{
             width:100%;
-            height:220px;
+            height:240px;
+
             object-fit:cover;
+
+            transition:0.5s;
+        }
+
+        .card:hover img{
+            transform:scale(1.05);
         }
 
         .card-content{
-            padding:20px;
+            padding:25px;
         }
 
         .card-content h3{
-            margin-bottom:10px;
-            color:#2e7d32;
+            font-size:26px;
+            color:#2d5a27;
+            margin-bottom:12px;
+        }
+
+        .card-content p{
+            color:#666;
+            line-height:1.8;
+        }
+
+        /* GALLERY */
+
+        #gallery{
+            background:white;
         }
 
         .gallery{
             display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-            gap:20px;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(300px,1fr));
+
+            gap:25px;
         }
 
         .gallery img{
             width:100%;
-            border-radius:12px;
-            height:250px;
+            height:260px;
+
             object-fit:cover;
+
+            border-radius:24px;
+
+            transition:0.4s;
+
+            cursor:pointer;
         }
 
-        .contact{
+        .gallery img:hover{
+            transform:scale(1.03);
+        }
+
+        /* CONTACT */
+
+        #contact{
+            background:
+            linear-gradient(
+                135deg,
+                #2f5f28,
+                #4d8c42
+            );
+
+            color:white;
+        }
+
+        .contact-content{
             text-align:center;
         }
 
-        .contact a{
-            display:inline-block;
-            margin:10px;
-            text-decoration:none;
-            color:white;
-            background:#2e7d32;
-            padding:14px 24px;
-            border-radius:8px;
+        .contact-content p{
+            font-size:19px;
+            margin-bottom:35px;
         }
+
+        .contact-links{
+            display:flex;
+            justify-content:center;
+            flex-wrap:wrap;
+            gap:20px;
+        }
+
+        .contact-links a{
+            background:white;
+            color:#2f5f28;
+
+            padding:15px 30px;
+
+            border-radius:999px;
+
+            font-weight:700;
+
+            transition:0.3s;
+        }
+
+        .contact-links a:hover{
+            transform:translateY(-4px);
+
+            box-shadow:
+            0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        /* FOOTER */
 
         footer{
-            background:#1b1b1b;
-            color:white;
+            background:#1c1c1c;
+            color:#aaa;
+
             text-align:center;
-            padding:25px;
+
+            padding:28px 0;
+
+            font-size:15px;
         }
+
+        /* MOBILE */
 
         @media(max-width:768px){
 
-            header .container{
+            .header-container{
                 flex-direction:column;
                 gap:15px;
             }
 
+            nav ul{
+                gap:18px;
+                flex-wrap:wrap;
+                justify-content:center;
+            }
+
+            .logo img{
+                height:50px;
+            }
+
+            #hero{
+                height:75vh;
+                margin-top:110px;
+            }
+
             .hero-content h1{
-                font-size:36px;
+                font-size:42px;
             }
 
             .hero-content p{
                 font-size:18px;
             }
+
+            .section-title h2{
+                font-size:32px;
+            }
+
+            .about-content{
+                font-size:17px;
+            }
+
+            .card img{
+                height:220px;
+            }
         }
+
     </style>
+
 </head>
 
 <body>
 
-<header>
-    <div class="header-container">
+    <!-- HEADER -->
 
-        <div class="logo">
-            <img src="images/logo.png" alt="Hoàng Gia Trang">
+    <header>
+
+        <div class="header-container">
+
+            <div class="logo">
+                <img src="images/logo.png" alt="Hoàng Gia Trang">
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="#about">Giới Thiệu</a></li>
+                    <li><a href="#products">Sản Phẩm</a></li>
+                    <li><a href="#gallery">Hình Ảnh</a></li>
+                    <li><a href="#contact">Liên Hệ</a></li>
+                </ul>
+            </nav>
+
         </div>
 
-        <nav>
-            <ul>
-                <li><a href="#about">Giới Thiệu</a></li>
-                <li><a href="#products">Sản Phẩm</a></li>
-                <li><a href="#gallery">Hình Ảnh</a></li>
-                <li><a href="#contact">Liên Hệ</a></li>
-            </ul>
-        </nav>
+    </header>
 
-    </div>
-</header>
+    <!-- HERO -->
 
-<section id="hero">
-</section>
+    <section id="hero">
 
-<section id="about">
-    <div class="container">
+        <div class="hero-content">
 
-        <div class="section-title">
-            <h2>Giới Thiệu</h2>
-        </div>
+            <h1>Hoàng Gia Trang Farm</h1>
 
-        <div class="about">
             <p>
-                Hoàng Gia Trang là mô hình farm nông nghiệp tổng hợp theo hướng tự nhiên,
-                kết hợp trồng trọt và chăn nuôi đa dạng.
-                Chúng tôi phát triển các sản phẩm sạch và theo mùa như:
-                rau củ, cá, ốc nhồi, sen, măng, vịt, lợn và nhiều nông sản khác.
+                Nông sản sạch • Tự nhiên • Bền vững
             </p>
+
         </div>
 
-    </div>
-</section>
+    </section>
 
-<section id="products">
+    <!-- ABOUT -->
 
-    <div class="container">
+    <section id="about">
 
-        <div class="section-title">
-            <h2>Sản Phẩm Tại Farm</h2>
-        </div>
+        <div class="container">
 
-        <div class="products">
+            <div class="section-title">
 
-            <div class="card">
-                <img src="images/raucu.jpg">
-                <div class="card-content">
-                    <h3>Rau Củ</h3>
-                    <p>Rau theo mùa, canh tác tự nhiên.</p>
-                </div>
+                <h2>Giới Thiệu</h2>
+
+                <p>
+                    Mô hình nông nghiệp tự nhiên kết hợp trồng trọt và chăn nuôi
+                </p>
+
             </div>
 
-            <div class="card">
-                <img src="images/ca.jpg">
-                <div class="card-content">
-                    <h3>Cá</h3>
-                    <p>Cá nuôi ao tự nhiên.</p>
-                </div>
-            </div>
+            <div class="about-content">
 
-            <div class="card">
-                <img src="images/oc.jpg">
-                <div class="card-content">
-                    <h3>Ốc Nhồi</h3>
-                    <p>Ốc sạch nuôi sinh thái.</p>
-                </div>
-            </div>
+                Hoàng Gia Trang là mô hình farm tổng hợp phát triển theo hướng tự nhiên,
+                tập trung vào chất lượng và tính bền vững.
+                Chúng tôi phát triển đa dạng nông sản theo mùa như:
+                cá, vịt, ốc nhồi, sen, măng, rau củ và nhiều sản phẩm đặc trưng khác.
 
-            <div class="card">
-                <img src="images/sen.jpg">
-                <div class="card-content">
-                    <h3>Sen</h3>
-                    <p>Sen tươi và sản phẩm từ sen.</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="images/mang.jpg">
-                <div class="card-content">
-                    <h3>Măng</h3>
-                    <p>Măng theo mùa tự nhiên.</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="images/vit.jpg">
-                <div class="card-content">
-                    <h3>Vịt</h3>
-                    <p>Chăn thả tự nhiên.</p>
-                </div>
             </div>
 
         </div>
 
-    </div>
+    </section>
 
-</section>
+    <!-- PRODUCTS -->
 
-<section id="gallery">
+    <section id="products">
 
-    <div class="container">
+        <div class="container">
 
-        <div class="section-title">
-            <h2>Hình Ảnh Farm</h2>
+            <div class="section-title">
+
+                <h2>Sản Phẩm Tại Farm</h2>
+
+                <p>
+                    Các sản phẩm sạch và theo mùa tại Hoàng Gia Trang
+                </p>
+
+            </div>
+
+            <div class="products">
+
+                <div class="card">
+
+                    <img src="images/raucu.jpg" alt="Rau củ">
+
+                    <div class="card-content">
+
+                        <h3>Rau Củ</h3>
+
+                        <p>
+                            Rau củ theo mùa, canh tác tự nhiên và hạn chế hóa chất.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <img src="images/ca.jpg" alt="Cá">
+
+                    <div class="card-content">
+
+                        <h3>Cá</h3>
+
+                        <p>
+                            Cá nuôi sinh thái trong ao tự nhiên tại farm.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <img src="images/oc.jpg" alt="Ốc nhồi">
+
+                    <div class="card-content">
+
+                        <h3>Ốc Nhồi</h3>
+
+                        <p>
+                            Ốc nhồi sạch nuôi trong môi trường tự nhiên.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <img src="images/sen.jpg" alt="Sen">
+
+                    <div class="card-content">
+
+                        <h3>Sen</h3>
+
+                        <p>
+                            Hoa sen và các sản phẩm theo mùa từ đầm sen.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <img src="images/mang.jpg" alt="Măng">
+
+                    <div class="card-content">
+
+                        <h3>Măng</h3>
+
+                        <p>
+                            Măng tươi khai thác tự nhiên theo mùa vụ.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <img src="images/vit.jpg" alt="Vịt">
+
+                    <div class="card-content">
+
+                        <h3>Vịt</h3>
+
+                        <p>
+                            Vịt nuôi thả tự nhiên trong khuôn viên farm.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="gallery">
-            <img src="images/farm1.jpg">
-            <img src="images/farm2.jpg">
-            <img src="images/farm3.jpg">
+    </section>
+
+    <!-- GALLERY -->
+
+    <section id="gallery">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>Hình Ảnh Farm</h2>
+
+                <p>
+                    Một vài khoảnh khắc tại Hoàng Gia Trang
+                </p>
+
+            </div>
+
+            <div class="gallery">
+
+                <img src="images/farm1.jpg" alt="Farm">
+
+                <img src="images/farm2.jpg" alt="Farm">
+
+                <img src="images/farm3.jpg" alt="Farm">
+
+            </div>
+
         </div>
 
-    </div>
+    </section>
 
-</section>
+    <!-- CONTACT -->
 
-<section id="contact">
+    <section id="contact">
 
-    <div class="container">
+        <div class="container">
 
-        <div class="section-title">
-            <h2>Liên Hệ</h2>
+            <div class="section-title">
+
+                <h2 style="color:white;">Liên Hệ</h2>
+
+                <p style="color:#d8e6d4;">
+                    Kết nối với Hoàng Gia Trang Farm
+                </p>
+
+            </div>
+
+            <div class="contact-content">
+
+                <p>
+                    Facebook • Zalo • Điện thoại
+                </p>
+
+                <div class="contact-links">
+
+                    <a href="https://facebook.com/" target="_blank">
+                        Facebook
+                    </a>
+
+                    <a href="https://zalo.me/" target="_blank">
+                        Zalo
+                    </a>
+
+                    <a href="tel:+84359195743">
+                        Gọi Điện
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="contact">
+    </section>
 
-            <a href="https://facebook.com/" target="_blank">Facebook</a>
+    <!-- FOOTER -->
 
-            <a href="https://zalo.me/" target="_blank">Zalo</a>
+    <footer>
 
-            <a href="tel:+84359195743">Gọi Điện</a>
+        © 2026 HOÀNG GIA TRANG FARM
 
-        </div>
-
-    </div>
-
-</section>
-
-<footer>
-    <p>© 2026 HOÀNG GIA TRANG FARM</p>
-</footer>
+    </footer>
 
 </body>
+
 </html>
