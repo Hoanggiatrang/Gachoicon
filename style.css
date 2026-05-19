@@ -43,7 +43,9 @@ body{
 
     box-shadow:0 2px 20px rgba(0,0,0,0.05);
 }
-
+nav{
+    margin-left: auto;
+}
 .nav-container{
     display:flex;
     justify-content:space-between;
