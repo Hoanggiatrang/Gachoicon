@@ -478,5 +478,24 @@ footer{
     .gallery img{
         height:220px;
     }
+   /* ===== DOT NAVIGATION ===== */
+   .dots {
+      text-align: center;
+      margin-top: 6px;
+   }
+   
+   .dots span {
+      display: inline-block;
+      width: 8px;
+      TXTheight: 8px;
+      margin: 0 4px;
+      border-radius: 50%;
+      background: #bbb;
+      cursor: pointer;
+      transition: 0.3s;
+   }
+   .dots span.active {
+       background: #333;
+   }
 
 }
