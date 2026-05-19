@@ -234,3 +234,94 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 });
+    /* =========================================
+       IMAGE SLIDER + DOTS + SWIPE + AUTO PLAY
+    ========================================= */
+
+    document.querySelectorAll(".image-slider").forEach(slider => {
+
+        const images = slider.querySelectorAll("img");
+        let index = 0;
+        let startX = 0;
+        let autoPlay;
+
+        // lấy dots (nằm ngay sau image-slider)
+        const dotsContainer = slider.nextElementSibling;
+
+        if (!dotsContainer || !dotsContainer.classList.contains("dots")) {
+            return; // nếu không có dots thì bỏ qua
+        }
+
+        // ===== tạo dots =====
+        images.forEach((_, i) => {
+
+            const dot = document.createElement("span");
+
+            if (i === 0) dot.classList.add("active");
+
+            dot.addEventListener("click", () => {
+                show(i);
+                resetAuto();
+            });
+
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.querySelectorAll("span");
+
+        function updateDots() {
+            dots.forEach(d => d.classList.remove("active"));
+            dots[index].classList.add("active");
+        }
+
+        function show(i) {
+
+            images[index].classList.remove("active");
+
+            index = (i + images.length) % images.length;
+
+            images[index].classList.add("active");
+
+            updateDots();
+        }
+
+        function next() {
+            show(index + 1);
+        }
+
+        function prev() {
+            show(index - 1);
+        }
+
+        function startAuto() {
+            autoPlay = setInterval(next, 3000);
+        }
+
+        function stopAuto() {
+            clearInterval(autoPlay);
+        }
+
+        function resetAuto() {
+            stopAuto();
+            startAuto();
+        }
+
+        startAuto();
+
+        // ===== SWIPE =====
+        slider.addEventListener("touchstart", e => {
+            startX = e.touches[0].clientX;
+            stopAuto();
+        });
+
+        slider.addEventListener("touchend", e => {
+
+            let endX = e.changedTouches[0].clientX;
+
+            if (startX - endX > 40) next();
+            else if (endX - startX > 40) prev();
+
+            startAuto();
+        });
+
+    });
