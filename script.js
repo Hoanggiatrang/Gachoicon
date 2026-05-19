@@ -1,19 +1,236 @@
-document.getElementById("contact-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Ngừng việc gửi form mặc định
+/* =========================================
+   WAIT UNTIL HTML LOAD
+========================================= */
 
-    const contactMethod = document.getElementById("contact-method").value;
+document.addEventListener("DOMContentLoaded", function () {
 
-    let contactLink = "";
+    /* =========================================
+       CONTACT FORM
+    ========================================= */
 
-    // Chuyển hướng tới kênh liên lạc đã chọn
-    if (contactMethod === "facebook") {
-        contactLink = "https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN";  // Link đến Messenger của Facebook
-    } else if (contactMethod === "zalo") {
-        contactLink = "https://zalo.me/359195743"; // Link đến Zalo (thay bằng ID Zalo nếu cần)
-    } else if (contactMethod === "phone") {
-        contactLink = "tel:+84359195743"; // Số điện thoại để gọi trực tiếp
+    const contactForm =
+    document.getElementById("contact-form");
+
+    if (contactForm) {
+
+        contactForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                const contactMethod =
+                document.getElementById(
+                    "contact-method"
+                ).value;
+
+                let contactLink = "";
+
+                // FACEBOOK
+                if (contactMethod === "facebook") {
+
+                    contactLink =
+                    "https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN";
+                }
+
+                // ZALO
+                else if (
+                    contactMethod === "zalo"
+                ) {
+
+                    contactLink =
+                    "https://zalo.me/359195743";
+                }
+
+                // PHONE
+                else if (
+                    contactMethod === "phone"
+                ) {
+
+                    contactLink =
+                    "tel:+84359195743";
+                }
+
+                // OPEN LINK
+                if (contactLink !== "") {
+
+                    window.location.href =
+                    contactLink;
+                }
+            }
+        );
     }
 
-    // Chuyển hướng đến kênh liên lạc đã chọn
-    window.location.href = contactLink;
+
+    /* =========================================
+       SMOOTH HEADER SHADOW
+    ========================================= */
+
+    window.addEventListener(
+        "scroll",
+        function () {
+
+            const header =
+            document.querySelector("header");
+
+            if (!header) return;
+
+            if (window.scrollY > 50) {
+
+                header.style.boxShadow =
+                "0 4px 25px rgba(0,0,0,0.12)";
+
+                header.style.background =
+                "rgba(255,255,255,0.96)";
+
+            } else {
+
+                header.style.boxShadow =
+                "0 2px 20px rgba(0,0,0,0.08)";
+
+                header.style.background =
+                "rgba(255,255,255,0.92)";
+            }
+        }
+    );
+
+
+    /* =========================================
+       SCROLL ANIMATION
+    ========================================= */
+
+    const observer =
+    new IntersectionObserver(
+
+        (entries) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        "show"
+                    );
+                }
+            });
+        },
+
+        {
+            threshold: 0.15
+        }
+    );
+
+    document.querySelectorAll(
+        ".card, .gallery img, .about-content, .section-title"
+    ).forEach((el) => {
+
+        el.classList.add("hidden");
+
+        observer.observe(el);
+    });
+
+
+    /* =========================================
+       IMAGE CLICK ZOOM
+    ========================================= */
+
+    const galleryImages =
+    document.querySelectorAll(
+        ".gallery img"
+    );
+
+    galleryImages.forEach((img) => {
+
+        img.addEventListener(
+            "click",
+            () => {
+
+                const overlay =
+                document.createElement("div");
+
+                overlay.style.position =
+                "fixed";
+
+                overlay.style.top = "0";
+
+                overlay.style.left = "0";
+
+                overlay.style.width = "100%";
+
+                overlay.style.height = "100%";
+
+                overlay.style.background =
+                "rgba(0,0,0,0.88)";
+
+                overlay.style.display =
+                "flex";
+
+                overlay.style.justifyContent =
+                "center";
+
+                overlay.style.alignItems =
+                "center";
+
+                overlay.style.zIndex =
+                "99999";
+
+                overlay.style.cursor =
+                "zoom-out";
+
+                const image =
+                document.createElement("img");
+
+                image.src = img.src;
+
+                image.style.maxWidth =
+                "92%";
+
+                image.style.maxHeight =
+                "92%";
+
+                image.style.borderRadius =
+                "18px";
+
+                image.style.boxShadow =
+                "0 10px 40px rgba(0,0,0,0.4)";
+
+                overlay.appendChild(image);
+
+                document.body.appendChild(
+                    overlay
+                );
+
+                overlay.addEventListener(
+                    "click",
+                    () => {
+
+                        overlay.remove();
+                    }
+                );
+            }
+        );
+    });
+
+
+    /* =========================================
+       PARALLAX HERO
+    ========================================= */
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            const hero =
+            document.querySelector("#hero");
+
+            if (!hero) return;
+
+            let offset =
+            window.pageYOffset;
+
+            hero.style.backgroundPositionY =
+            offset * 0.4 + "px";
+        }
+    );
+
 });
