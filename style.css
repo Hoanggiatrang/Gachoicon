@@ -488,7 +488,9 @@ footer{
 
 .image-slider img {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -501,7 +503,23 @@ footer{
     opacity: 1;
 }
 
-/* QUAN TRỌNG: chặn ảnh bị xếp dòng */
-.image-slider img:not(.active) {
-    pointer-events: none;
+/* dots */
+.dots {
+    text-align: center;
+    margin-top: 6px;
+}
+
+.dots span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    border-radius: 50%;
+    background: #bbb;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dots span.active {
+    background: #333;
 }
