@@ -523,3 +523,16 @@ footer{
 .dots span.active {
     background: #333;
 }
+   .image-slider,
+.image-slider * {
+    box-sizing: border-box;
+}
+
+.image-slider img {
+    position: absolute !important;
+    display: block;
+}
+
+.image-slider {
+    display: block;
+}
