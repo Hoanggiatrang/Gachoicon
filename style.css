@@ -132,7 +132,7 @@ nav ul li a:hover::after{
 
     margin-top:78px;
 
-    background-image:url('images/banner-desktop.jpg');
+    background-image:url('images/banner.png');
     background-position:center center;
     background-size:cover;
     background-repeat:no-repeat;
