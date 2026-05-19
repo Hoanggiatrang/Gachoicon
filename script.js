@@ -246,7 +246,8 @@ document.addEventListener("DOMContentLoaded", function () {
         let autoPlay;
 
         // lấy dots (nằm ngay sau image-slider)
-        const dotsContainer = slider.nextElementSibling;
+        const card = slider.parentElement;
+       const dotsContainer = card.querySelector(".dots");
 
         if (!dotsContainer || !dotsContainer.classList.contains("dots")) {
             return; // nếu không có dots thì bỏ qua
