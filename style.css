@@ -424,8 +424,12 @@ footer{
         justify-content:center;
     }
 
-    .logo img{
-        height:50px;
+.logo img{
+    max-height: 95px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
     }
 
     #hero{
