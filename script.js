@@ -321,7 +321,7 @@ overlay.addEventListener("mousedown", e => {
     startX = e.clientX;
 });
 
-document.addEventListener("mousemove", e => {
+overlay.addEventListener("mouseup", e => {
 
     if (!isDragging) return;
 
@@ -334,8 +334,6 @@ document.addEventListener("mousemove", e => {
         (zoomIndex + 1) % images.length;
 
         updateZoomImage();
-
-        startX = endX;
     }
 
     // kéo phải
@@ -346,14 +344,39 @@ document.addEventListener("mousemove", e => {
         % images.length;
 
         updateZoomImage();
-
-        startX = endX;
     }
-});
-
-document.addEventListener("mouseup", () => {
 
     isDragging = false;
+});
+
+/* ===== KEYBOARD ===== */
+
+document.addEventListener("keydown", e => {
+
+    // mũi tên phải
+    if (e.key === "ArrowRight") {
+
+        zoomIndex =
+        (zoomIndex + 1) % images.length;
+
+        updateZoomImage();
+    }
+
+    // mũi tên trái
+    else if (e.key === "ArrowLeft") {
+
+        zoomIndex =
+        (zoomIndex - 1 + images.length)
+        % images.length;
+
+        updateZoomImage();
+    }
+
+    // ESC để đóng
+    else if (e.key === "Escape") {
+
+        overlay.remove();
+    }
 });
 
 /* ===== SWIPE FUNCTION ===== */
