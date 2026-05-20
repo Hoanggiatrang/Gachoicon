@@ -480,7 +480,9 @@ function handleSwipe(endX) {
         overlay.remove();
     }
 });
-        images.forEach(img => img.classList.remove("active"));
+/* ĐÓNG slider.addEventListener("click"... ) Ở ĐÂY */
+});
+images.forEach(img => img.classList.remove("active"));
         images[0].classList.add("active");
         let index = 0;
         let startX = 0;
