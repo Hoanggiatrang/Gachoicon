@@ -376,6 +376,8 @@ section{
     will-change:
     transform,
     opacity;
+   user-select: none;
+    -webkit-user-drag: none;
 }
 
 .image-slider img.active {
