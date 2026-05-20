@@ -294,22 +294,42 @@ slider.addEventListener("click", () => {
 
     // ===== swipe trong zoom =====
 
-let touchStartX = 0;
-let touchEndX = 0;
+let startX = 0;
+
+/* ===== MOBILE SWIPE ===== */
 
 overlay.addEventListener("touchstart", e => {
 
-    touchStartX =
-    e.changedTouches[0].screenX;
+    startX = e.touches[0].clientX;
 });
 
 overlay.addEventListener("touchend", e => {
 
-    touchEndX =
-    e.changedTouches[0].screenX;
+    let endX = e.changedTouches[0].clientX;
+
+    handleSwipe(endX);
+});
+
+/* ===== PC DRAG ===== */
+
+overlay.addEventListener("mousedown", e => {
+
+    startX = e.clientX;
+});
+
+overlay.addEventListener("mouseup", e => {
+
+    let endX = e.clientX;
+
+    handleSwipe(endX);
+});
+
+/* ===== SWIPE FUNCTION ===== */
+
+function handleSwipe(endX) {
 
     // vuốt trái
-    if (touchStartX - touchEndX > 50) {
+    if (startX - endX > 40) {
 
         zoomIndex =
         (zoomIndex + 1) % images.length;
@@ -318,7 +338,7 @@ overlay.addEventListener("touchend", e => {
     }
 
     // vuốt phải
-    if (touchEndX - touchStartX > 50) {
+    else if (endX - startX > 40) {
 
         zoomIndex =
         (zoomIndex - 1 + images.length)
@@ -326,7 +346,7 @@ overlay.addEventListener("touchend", e => {
 
         updateZoomImage();
     }
-});
+}
 
     // click nền để đóng
 
