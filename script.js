@@ -480,7 +480,6 @@ function handleSwipe(endX) {
         overlay.remove();
     }
 });
-});
         images.forEach(img => img.classList.remove("active"));
         images[0].classList.add("active");
         let index = 0;
