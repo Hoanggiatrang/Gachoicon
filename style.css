@@ -318,14 +318,10 @@ section{
     background:white;
 }
 
-.gallery{
-    display:grid;
 
-    grid-template-columns:
-    repeat(auto-fit,minmax(300px,1fr));
 
-    gap:25px;
-}
+
+
 
 /* ===== STORY GALLERY ===== */
 
@@ -622,8 +618,16 @@ footer{
         height:220px;
     }
 
-    .gallery img{
-        height:220px;
-    }
+    .gallery-item{
+    height:320px;
+}
+
+.gallery-text h3{
+    font-size:20px;
+}
+
+.gallery-text p{
+    font-size:13px;
+}
 
    
