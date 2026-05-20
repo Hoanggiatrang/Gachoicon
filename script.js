@@ -285,7 +285,6 @@ document.querySelectorAll(".image-slider img").forEach((img) => {
         }
     );
 
-});
     /* =========================================
        IMAGE SLIDER + DOTS + SWIPE + AUTO PLAY
     ========================================= */
@@ -378,3 +377,4 @@ document.querySelectorAll(".image-slider img").forEach((img) => {
         });
 
     });
+});
