@@ -242,291 +242,123 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".image-slider").forEach(slider => {
 
         const images = slider.querySelectorAll("img");
-      /* ===== ZOOM + SWIPE INSIDE ZOOM ===== */
 
-slider.addEventListener("click", () => {
+      /* ===== ZOOM + 2 MŨI TÊN ===== */
+        slider.addEventListener("click", () => {
+            const activeImage = slider.querySelector("img.active");
+            if (!activeImage) return;
 
-    const activeImage =
-    slider.querySelector("img.active");
+            let zoomIndex = Array.from(images).indexOf(activeImage);
 
-    if (!activeImage) return;
+            const overlay = document.createElement("div");
+            overlay.style.position = "fixed";
+            overlay.style.top = "0";
+            overlay.style.left = "0";
+            overlay.style.width = "100%";
+            overlay.style.height = "100%";
+            overlay.style.background = "rgba(0,0,0,0.92)";
+            overlay.style.display = "flex";
+            overlay.style.justifyContent = "center";
+            overlay.style.alignItems = "center";
+            overlay.style.zIndex = "99999";
 
-    let zoomIndex =
-    Array.from(images).indexOf(activeImage);
+            const image = document.createElement("img");
+            image.src = images[zoomIndex].src;
+            image.style.maxWidth = "94%";
+            image.style.maxHeight = "92vh";
+            image.style.borderRadius = "18px";
+            image.style.boxShadow = "0 10px 40px rgba(0,0,0,0.5)";
 
-    const overlay =
-    document.createElement("div");
+            /* ===== LEFT BUTTON ===== */
+            const prevBtn = document.createElement("div");
+            prevBtn.innerHTML = "❮";
+            prevBtn.style.position = "absolute";
+            prevBtn.style.left = "20px";
+            prevBtn.style.top = "50%";
+            prevBtn.style.transform = "translateY(-50%)";
+            prevBtn.style.fontSize = "55px";
+            prevBtn.style.color = "white";
+            prevBtn.style.cursor = "pointer";
+            prevBtn.style.userSelect = "none";
+            prevBtn.style.padding = "15px 20px";
+            prevBtn.style.borderRadius = "50%";
+            prevBtn.style.background = "rgba(0,0,0,0.45)";
+            prevBtn.style.zIndex = "100000";
 
-    overlay.style.position = "fixed";
-    overlay.style.top = "0";
-    overlay.style.left = "0";
+            /* ===== RIGHT BUTTON ===== */
+            const nextBtn = document.createElement("div");
+            nextBtn.innerHTML = "❯";
+            nextBtn.style.position = "absolute";
+            nextBtn.style.right = "20px";
+            nextBtn.style.top = "50%";
+            nextBtn.style.transform = "translateY(-50%)";
+            nextBtn.style.fontSize = "55px";
+            nextBtn.style.color = "white";
+            nextBtn.style.cursor = "pointer";
+            nextBtn.style.userSelect = "none";
+            nextBtn.style.padding = "15px 20px";
+            nextBtn.style.borderRadius = "50%";
+            nextBtn.style.background = "rgba(0,0,0,0.45)";
+            nextBtn.style.zIndex = "100000";
 
-    overlay.style.width = "100%";
-    overlay.style.height = "100%";
+            overlay.appendChild(image);
+            overlay.appendChild(prevBtn);
+            overlay.appendChild(nextBtn);
+            document.body.appendChild(overlay);
 
-    overlay.style.background =
-    "rgba(0,0,0,0.92)";
+            overlay.tabIndex = 0;
+            overlay.focus();
 
-    overlay.style.display = "flex";
-    overlay.style.justifyContent = "center";
-    overlay.style.alignItems = "center";
+            function updateZoomImage() {
+                image.src = images[zoomIndex].src;
+            }
 
-    overlay.style.zIndex = "99999";
+            function goToPrev() {
+                zoomIndex = (zoomIndex - 1 + images.length) % images.length;
+                updateZoomImage();
+            }
 
-    const image =
-    document.createElement("img");
+            function goToNext() {
+                zoomIndex = (zoomIndex + 1) % images.length;
+                updateZoomImage();
+            }
 
-    image.src = images[zoomIndex].src;
+            /* Button Events */
+            prevBtn.addEventListener("click", e => {
+                e.stopImmediatePropagation();
+                goToPrev();
+            });
 
-    image.style.maxWidth = "92%";
-    image.style.maxHeight = "92%";
+            nextBtn.addEventListener("click", e => {
+                e.stopImmediatePropagation();
+                goToNext();
+            });
 
-    image.style.borderRadius = "18px";
+            /* Swipe Mobile */
+            let startX = 0;
+            overlay.addEventListener("touchstart", e => {
+                startX = e.touches[0].clientX;
+            });
+            overlay.addEventListener("touchend", e => {
+                let endX = e.changedTouches[0].clientX;
+                if (startX - endX > 50) goToNext();
+                else if (endX - startX > 50) goToPrev();
+            });
 
-    overlay.appendChild(image);
+            /* Keyboard */
+            overlay.addEventListener("keydown", e => {
+                if (e.key === "ArrowRight") goToNext();
+                else if (e.key === "ArrowLeft") goToPrev();
+                else if (e.key === "Escape") overlay.remove();
+            });
 
-    document.body.appendChild(overlay);
-   overlay.tabIndex = 0;
-
-overlay.focus();
-
-    function updateZoomImage() {
-
-    image.src = images[zoomIndex].src;
-}
-
-/* ===== LEFT BUTTON ===== */
-
-const prevBtn =
-document.createElement("div");
-
-prevBtn.innerHTML = "❮";
-
-prevBtn.style.position = "absolute";
-
-prevBtn.style.left = "25px";
-
-prevBtn.style.top = "50%";
-
-prevBtn.style.transform =
-"translateY(-50%)";
-
-prevBtn.style.fontSize = "48px";
-
-prevBtn.style.color = "white";
-
-prevBtn.style.cursor = "pointer";
-
-prevBtn.style.userSelect = "none";
-
-prevBtn.style.padding =
-"10px 18px";
-
-prevBtn.style.borderRadius =
-"50%";
-
-prevBtn.style.background =
-"rgba(0,0,0,0.25)";
-
-prevBtn.style.zIndex = "100000";
-
-/* ===== RIGHT BUTTON ===== */
-
-const nextBtn =
-document.createElement("div");
-
-nextBtn.innerHTML = "❯";
-
-nextBtn.style.position = "absolute";
-
-nextBtn.style.right = "25px";
-
-nextBtn.style.top = "50%";
-
-nextBtn.style.transform =
-"translateY(-50%)";
-
-nextBtn.style.fontSize = "48px";
-
-nextBtn.style.color = "white";
-
-nextBtn.style.cursor = "pointer";
-
-nextBtn.style.userSelect = "none";
-
-nextBtn.style.padding =
-"10px 18px";
-
-nextBtn.style.borderRadius =
-"50%";
-
-nextBtn.style.background =
-"rgba(0,0,0,0.25)";
-
-nextBtn.style.zIndex = "100000";
-
-/* ===== BUTTON EVENTS ===== */
-
-prevBtn.addEventListener("click", e => {
-
-    e.stopPropagation();
-
-    zoomIndex =
-    (zoomIndex - 1 + images.length)
-    % images.length;
-
-    updateZoomImage();
+            /* Click ngoài đóng overlay */
+            overlay.addEventListener("click", (e) => {
+                if (e.target === overlay) overlay.remove();
+            });
 });
 
-nextBtn.addEventListener("click", e => {
-
-    e.stopPropagation();
-
-    zoomIndex =
-    (zoomIndex + 1)
-    % images.length;
-
-    updateZoomImage();
-});
-
-/* ===== ADD BUTTON ===== */
-
-overlay.appendChild(prevBtn);
-
-overlay.appendChild(nextBtn);
-
-    // ===== swipe trong zoom =====
-
-let startX = 0;
-
-/* ===== MOBILE SWIPE ===== */
-
-overlay.addEventListener("touchstart", e => {
-
-    startX = e.touches[0].clientX;
-});
-
-overlay.addEventListener("touchend", e => {
-
-    let endX = e.changedTouches[0].clientX;
-
-    handleSwipe(endX);
-});
-
-/* ===== PC DRAG ===== */
-
-let isDragging = false;
-
-overlay.addEventListener("mousedown", e => {
-
-    isDragging = true;
-
-    startX = e.clientX;
-});
-
-overlay.addEventListener("mousemove", e => {
-
-    if (!isDragging) return;
-
-    let moveX = e.clientX;
-
-    // kéo trái
-    if (startX - moveX > 80) {
-
-        zoomIndex =
-        (zoomIndex + 1) % images.length;
-
-        updateZoomImage();
-
-        startX = moveX;
-    }
-
-    // kéo phải
-    else if (moveX - startX > 80) {
-
-        zoomIndex =
-        (zoomIndex - 1 + images.length)
-        % images.length;
-
-        updateZoomImage();
-
-        startX = moveX;
-    }
-});
-
-overlay.addEventListener("mouseup", () => {
-
-    isDragging = false;
-});
-
-overlay.addEventListener("mouseleave", () => {
-
-    isDragging = false;
-});
-/* ===== KEYBOARD ===== */
-
-overlay.addEventListener("keydown", e => {
-    // mũi tên phải
-    if (e.key === "ArrowRight") {
-
-        zoomIndex =
-        (zoomIndex + 1) % images.length;
-
-        updateZoomImage();
-    }
-
-    // mũi tên trái
-    else if (e.key === "ArrowLeft") {
-
-        zoomIndex =
-        (zoomIndex - 1 + images.length)
-        % images.length;
-
-        updateZoomImage();
-    }
-
-    // ESC để đóng
-    else if (e.key === "Escape") {
-
-        overlay.remove();
-    }
-});
-
-/* ===== SWIPE FUNCTION ===== */
-
-function handleSwipe(endX) {
-
-    // vuốt trái
-    if (startX - endX > 40) {
-
-        zoomIndex =
-        (zoomIndex + 1) % images.length;
-
-        updateZoomImage();
-    }
-
-    // vuốt phải
-    else if (endX - startX > 40) {
-
-        zoomIndex =
-        (zoomIndex - 1 + images.length)
-        % images.length;
-
-        updateZoomImage();
-    }
-}
-
-    // click nền để đóng
-
-    overlay.addEventListener("click", (e) => {
-
-    // nếu đang drag thì không đóng
-if (isDragging) return;
-    if (e.target === overlay) {
-
-        overlay.remove();
-    }
-});
+       
         images.forEach(img => img.classList.remove("active"));
         images[0].classList.add("active");
         let index = 0;
