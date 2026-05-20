@@ -478,7 +478,8 @@ footer{
     .gallery img{
         height:220px;
     }
-   .image-slider {
+   
+.image-slider {
     position: relative;
     width: 100%;
     height: 200px;
