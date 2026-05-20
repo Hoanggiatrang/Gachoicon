@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("scroll", function () {
         const header = document.querySelector("header");
         if (!header) return;
-
         if (window.scrollY > 50) {
             header.style.boxShadow = "0 4px 25px rgba(0,0,0,0.12)";
             header.style.background = "rgba(255,255,255,0.96)";
@@ -62,9 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
             observer.observe(el);
         });
 
-    /* =========================================
-       IMAGE CLICK ZOOM (Gallery)
-    ========================================= */
+    /* Gallery Zoom */
     const galleryImages = document.querySelectorAll(".gallery img");
     galleryImages.forEach((img) => {
         img.addEventListener("click", () => {
@@ -105,12 +102,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     /* =========================================
-       IMAGE SLIDER + DOTS + SWIPE + AUTO PLAY + ZOOM ARROWS
+       IMAGE SLIDER + ZOOM WITH ARROWS
     ========================================= */
     document.querySelectorAll(".image-slider").forEach(slider => {
         const images = slider.querySelectorAll("img");
 
-        /* ===== CLICK TO ZOOM WITH ARROWS ===== */
         slider.addEventListener("click", () => {
             const activeImage = slider.querySelector("img.active");
             if (!activeImage) return;
@@ -118,69 +114,71 @@ document.addEventListener("DOMContentLoaded", function () {
             let zoomIndex = Array.from(images).indexOf(activeImage);
 
             const overlay = document.createElement("div");
-            overlay.style.position = "fixed";
-            overlay.style.top = "0";
-            overlay.style.left = "0";
-            overlay.style.width = "100%";
-            overlay.style.height = "100%";
-            overlay.style.background = "rgba(0,0,0,0.92)";
-            overlay.style.display = "flex";
-            overlay.style.justifyContent = "center";
-            overlay.style.alignItems = "center";
-            overlay.style.zIndex = "99999";
+            Object.assign(overlay.style, {
+                position: "fixed",
+                top: "0", left: "0",
+                width: "100%", height: "100%",
+                background: "rgba(0,0,0,0.92)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: "99999"
+            });
 
-            // Container chứa ảnh + mũi tên
             const container = document.createElement("div");
             container.style.position = "relative";
-            container.style.maxWidth = "92%";
-            container.style.maxHeight = "92%";
+            container.style.maxWidth = "94%";
+            container.style.maxHeight = "94%";
 
             const image = document.createElement("img");
             image.src = images[zoomIndex].src;
-            image.style.width = "100%";
-            image.style.height = "auto";
-            image.style.borderRadius = "18px";
-            image.style.boxShadow = "0 10px 40px rgba(0,0,0,0.5)";
-            image.style.display = "block";
+            Object.assign(image.style, {
+                maxWidth: "100%",
+                maxHeight: "92vh",
+                width: "auto",
+                height: "auto",
+                borderRadius: "18px",
+                boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
+                display: "block"
+            });
 
             // Left Arrow
             const leftArrow = document.createElement("div");
             leftArrow.innerHTML = "❮";
-            leftArrow.style.position = "absolute";
-            leftArrow.style.left = "-60px";
-            leftArrow.style.top = "50%";
-            leftArrow.style.transform = "translateY(-50%)";
-            leftArrow.style.fontSize = "50px";
-            leftArrow.style.color = "rgba(255,255,255,0.9)";
-            leftArrow.style.cursor = "pointer";
-            leftArrow.style.userSelect = "none";
-            leftArrow.style.zIndex = "100000";
-            leftArrow.style.transition = "all 0.2s";
-            leftArrow.style.padding = "10px";
+            Object.assign(leftArrow.style, {
+                position: "absolute",
+                left: "-70px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontSize: window.innerWidth < 768 ? "55px" : "50px",
+                color: "rgba(255,255,255,0.95)",
+                cursor: "pointer",
+                userSelect: "none",
+                zIndex: "100000",
+                padding: "15px"
+            });
 
             // Right Arrow
             const rightArrow = document.createElement("div");
             rightArrow.innerHTML = "❯";
-            rightArrow.style.position = "absolute";
-            rightArrow.style.right = "-60px";
-            rightArrow.style.top = "50%";
-            rightArrow.style.transform = "translateY(-50%)";
-            rightArrow.style.fontSize = "50px";
-            rightArrow.style.color = "rgba(255,255,255,0.9)";
-            rightArrow.style.cursor = "pointer";
-            rightArrow.style.userSelect = "none";
-            rightArrow.style.zIndex = "100000";
-            rightArrow.style.transition = "all 0.2s";
-            rightArrow.style.padding = "10px";
+            Object.assign(rightArrow.style, {
+                position: "absolute",
+                right: "-70px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontSize: window.innerWidth < 768 ? "55px" : "50px",
+                color: "rgba(255,255,255,0.95)",
+                cursor: "pointer",
+                userSelect: "none",
+                zIndex: "100000",
+                padding: "15px"
+            });
 
             container.appendChild(image);
             container.appendChild(leftArrow);
             container.appendChild(rightArrow);
             overlay.appendChild(container);
             document.body.appendChild(overlay);
-
-            overlay.tabIndex = 0;
-            overlay.focus();
 
             function updateImage() {
                 image.src = images[zoomIndex].src;
@@ -196,28 +194,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 updateImage();
             }
 
-            // Click mũi tên
-            leftArrow.addEventListener("click", e => {
-                e.stopImmediatePropagation();
-                goToPrev();
-            });
-
-            rightArrow.addEventListener("click", e => {
-                e.stopImmediatePropagation();
-                goToNext();
-            });
-
-            // Hover effect (PC)
-            [leftArrow, rightArrow].forEach(arrow => {
-                arrow.addEventListener("mouseenter", () => {
-                    arrow.style.color = "#fff";
-                    arrow.style.transform = "translateY(-50%) scale(1.2)";
-                });
-                arrow.addEventListener("mouseleave", () => {
-                    arrow.style.color = "rgba(255,255,255,0.9)";
-                    arrow.style.transform = "translateY(-50%) scale(1)";
-                });
-            });
+            leftArrow.addEventListener("click", e => { e.stopImmediatePropagation(); goToPrev(); });
+            rightArrow.addEventListener("click", e => { e.stopImmediatePropagation(); goToNext(); });
 
             // Touch swipe
             let startX = 0;
@@ -235,7 +213,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 else if (e.key === "Escape") overlay.remove();
             });
 
-            // Click overlay để đóng
             overlay.addEventListener("click", (e) => {
                 if (e.target === overlay) overlay.remove();
             });
@@ -246,9 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (images.length > 0) images[0].classList.add("active");
 
         let index = 0;
-        let startX = 0;
         let autoPlay;
-
         const card = slider.parentElement;
         const dotsContainer = card.querySelector(".dots");
         if (!dotsContainer || !dotsContainer.classList.contains("dots")) return;
@@ -286,12 +261,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         startAuto();
 
-        // Swipe slider
+        let startX = 0;
         slider.addEventListener("touchstart", e => {
             startX = e.touches[0].clientX;
             stopAuto();
         });
-
         slider.addEventListener("touchend", e => {
             let endX = e.changedTouches[0].clientX;
             if (startX - endX > 40) next();
