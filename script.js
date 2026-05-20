@@ -211,6 +211,58 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     });
 
+/* =========================================
+   SLIDER IMAGE ZOOM
+========================================= */
+
+document.querySelectorAll(".image-slider img").forEach((img) => {
+
+    img.addEventListener("click", () => {
+
+        const overlay =
+        document.createElement("div");
+
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+
+        overlay.style.background =
+        "rgba(0,0,0,0.88)";
+
+        overlay.style.display = "flex";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+
+        overlay.style.zIndex = "99999";
+
+        overlay.style.cursor = "zoom-out";
+
+        const image =
+        document.createElement("img");
+
+        image.src = img.src;
+
+        image.style.maxWidth = "92%";
+        image.style.maxHeight = "92%";
+
+        image.style.borderRadius = "18px";
+
+        image.style.boxShadow =
+        "0 10px 40px rgba(0,0,0,0.4)";
+
+        overlay.appendChild(image);
+
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener("click", () => {
+
+            overlay.remove();
+        });
+    });
+});
 
     /* =========================================
        PARALLAX HERO
