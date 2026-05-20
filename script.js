@@ -242,55 +242,48 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".image-slider").forEach(slider => {
 
         const images = slider.querySelectorAll("img");
-          /* ===== CLICK ZOOM ACTIVE IMAGE ===== */
+        images.forEach(img => {
 
-slider.addEventListener("click", () => {
+    img.addEventListener("click", () => {
 
-    const activeImage =
-    slider.querySelector("img.active");
+        // chỉ cho zoom ảnh đang active
+        if (!img.classList.contains("active")) return;
 
-    if (!activeImage) return;
+        const overlay = document.createElement("div");
 
-    const overlay =
-    document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
 
-    overlay.style.position = "fixed";
-    overlay.style.top = "0";
-    overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
 
-    overlay.style.width = "100%";
-    overlay.style.height = "100%";
+        overlay.style.background = "rgba(0,0,0,0.88)";
 
-    overlay.style.background =
-    "rgba(0,0,0,0.88)";
+        overlay.style.display = "flex";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
 
-    overlay.style.display = "flex";
-    overlay.style.justifyContent = "center";
-    overlay.style.alignItems = "center";
+        overlay.style.zIndex = "99999";
 
-    overlay.style.zIndex = "99999";
+        const image = document.createElement("img");
 
-    const image =
-    document.createElement("img");
+        image.src = img.src;
 
-    image.src = activeImage.src;
+        image.style.maxWidth = "92%";
+        image.style.maxHeight = "92%";
 
-    image.style.maxWidth = "92%";
-    image.style.maxHeight = "92%";
+        image.style.borderRadius = "18px";
 
-    image.style.borderRadius = "18px";
+        overlay.appendChild(image);
 
-    image.style.boxShadow =
-    "0 10px 40px rgba(0,0,0,0.4)";
+        document.body.appendChild(overlay);
 
-    overlay.appendChild(image);
-
-    document.body.appendChild(overlay);
-
-    overlay.addEventListener("click", () => {
-
-        overlay.remove();
+        overlay.addEventListener("click", () => {
+            overlay.remove();
+        });
     });
+
 });
         images.forEach(img => img.classList.remove("active"));
         images[0].classList.add("active");
