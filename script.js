@@ -6,11 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
        CONTACT FORM
     ========================================= */
     const contactForm = document.getElementById("contact-form");
-
     if (contactForm) {
         contactForm.addEventListener("submit", function (event) {
             event.preventDefault();
-
             const contactMethod = document.getElementById("contact-method").value;
             let contactLink = "";
 
@@ -71,10 +69,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     /* =========================================
-       IMAGE CLICK ZOOM
+       IMAGE CLICK ZOOM (Gallery)
     ========================================= */
     const galleryImages = document.querySelectorAll(".gallery img");
-
     galleryImages.forEach((img) => {
         img.addEventListener("click", () => {
             const overlay = document.createElement("div");
@@ -100,9 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.appendChild(image);
             document.body.appendChild(overlay);
 
-            overlay.addEventListener("click", () => {
-                overlay.remove();
-            });
+            overlay.addEventListener("click", () => overlay.remove());
         });
     });
 
@@ -112,18 +107,17 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("scroll", () => {
         const hero = document.querySelector("#hero");
         if (!hero) return;
-
         let offset = window.pageYOffset;
         hero.style.backgroundPositionY = offset * 0.4 + "px";
     });
 
     /* =========================================
-       IMAGE SLIDER + DOTS + SWIPE + AUTO PLAY
+       IMAGE SLIDER + DOTS + SWIPE + AUTO PLAY + ZOOM ARROWS
     ========================================= */
     document.querySelectorAll(".image-slider").forEach(slider => {
         const images = slider.querySelectorAll("img");
 
-        /* ===== ZOOM + SWIPE INSIDE ZOOM ===== */
+        /* ===== CLICK TO ZOOM WITH ARROWS ===== */
         slider.addEventListener("click", () => {
             const activeImage = slider.querySelector("img.active");
             if (!activeImage) return;
@@ -147,8 +141,36 @@ document.addEventListener("DOMContentLoaded", function () {
             image.style.maxWidth = "92%";
             image.style.maxHeight = "92%";
             image.style.borderRadius = "18px";
+            image.style.boxShadow = "0 10px 40px rgba(0,0,0,0.5)";
+            image.style.transition = "transform 0.3s";
+
+            // Left Arrow
+            const leftArrow = document.createElement("div");
+            leftArrow.innerHTML = "❮";
+            leftArrow.style.position = "absolute";
+            leftArrow.style.left = "20px";
+            leftArrow.style.fontSize = "50px";
+            leftArrow.style.color = "rgba(255,255,255,0.85)";
+            leftArrow.style.cursor = "pointer";
+            leftArrow.style.userSelect = "none";
+            leftArrow.style.zIndex = "100000";
+            leftArrow.style.transition = "all 0.2s";
+
+            // Right Arrow
+            const rightArrow = document.createElement("div");
+            rightArrow.innerHTML = "❯";
+            rightArrow.style.position = "absolute";
+            rightArrow.style.right = "20px";
+            rightArrow.style.fontSize = "50px";
+            rightArrow.style.color = "rgba(255,255,255,0.85)";
+            rightArrow.style.cursor = "pointer";
+            rightArrow.style.userSelect = "none";
+            rightArrow.style.zIndex = "100000";
+            rightArrow.style.transition = "all 0.2s";
 
             overlay.appendChild(image);
+            overlay.appendChild(leftArrow);
+            overlay.appendChild(rightArrow);
             document.body.appendChild(overlay);
 
             overlay.tabIndex = 0;
@@ -158,21 +180,50 @@ document.addEventListener("DOMContentLoaded", function () {
                 image.src = images[zoomIndex].src;
             }
 
-            // Swipe & Drag variables
+            function goToNext() {
+                zoomIndex = (zoomIndex + 1) % images.length;
+                updateZoomImage();
+            }
+
+            function goToPrev() {
+                zoomIndex = (zoomIndex - 1 + images.length) % images.length;
+                updateZoomImage();
+            }
+
+            // Arrow Click
+            leftArrow.addEventListener("click", (e) => {
+                e.stopImmediatePropagation();
+                goToPrev();
+            });
+
+            rightArrow.addEventListener("click", (e) => {
+                e.stopImmediatePropagation();
+                goToNext();
+            });
+
+            // Hover effect
+            [leftArrow, rightArrow].forEach(arrow => {
+                arrow.addEventListener("mouseenter", () => {
+                    arrow.style.color = "#fff";
+                    arrow.style.transform = "scale(1.2)";
+                });
+                arrow.addEventListener("mouseleave", () => {
+                    arrow.style.color = "rgba(255,255,255,0.85)";
+                    arrow.style.transform = "scale(1)";
+                });
+            });
+
+            // Swipe, Drag, Keyboard
             let startX = 0;
             let isDragging = false;
 
-            /* ===== MOBILE SWIPE ===== */
-            overlay.addEventListener("touchstart", e => {
-                startX = e.touches[0].clientX;
-            });
-
+            overlay.addEventListener("touchstart", e => startX = e.touches[0].clientX);
             overlay.addEventListener("touchend", e => {
                 let endX = e.changedTouches[0].clientX;
-                handleSwipe(endX);
+                if (startX - endX > 50) goToNext();
+                else if (endX - startX > 50) goToPrev();
             });
 
-            /* ===== PC DRAG ===== */
             overlay.addEventListener("mousedown", e => {
                 isDragging = true;
                 startX = e.clientX;
@@ -181,57 +232,27 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.addEventListener("mousemove", e => {
                 if (!isDragging) return;
                 let moveX = e.clientX;
-
-                if (startX - moveX > 80) {
-                    zoomIndex = (zoomIndex + 1) % images.length;
-                    updateZoomImage();
-                    startX = moveX;
-                } else if (moveX - startX > 80) {
-                    zoomIndex = (zoomIndex - 1 + images.length) % images.length;
-                    updateZoomImage();
-                    startX = moveX;
-                }
+                if (startX - moveX > 80) { goToNext(); startX = moveX; }
+                else if (moveX - startX > 80) { goToPrev(); startX = moveX; }
             });
 
-            overlay.addEventListener("mouseup", () => { isDragging = false; });
-            overlay.addEventListener("mouseleave", () => { isDragging = false; });
+            overlay.addEventListener("mouseup", () => isDragging = false);
+            overlay.addEventListener("mouseleave", () => isDragging = false);
 
-            /* ===== KEYBOARD ===== */
             overlay.addEventListener("keydown", e => {
-                if (e.key === "ArrowRight") {
-                    zoomIndex = (zoomIndex + 1) % images.length;
-                    updateZoomImage();
-                } else if (e.key === "ArrowLeft") {
-                    zoomIndex = (zoomIndex - 1 + images.length) % images.length;
-                    updateZoomImage();
-                } else if (e.key === "Escape") {
-                    overlay.remove();
-                }
+                if (e.key === "ArrowRight") goToNext();
+                else if (e.key === "ArrowLeft") goToPrev();
+                else if (e.key === "Escape") overlay.remove();
             });
 
-            /* ===== SWIPE FUNCTION ===== */
-            function handleSwipe(endX) {
-                if (startX - endX > 40) {
-                    zoomIndex = (zoomIndex + 1) % images.length;
-                    updateZoomImage();
-                } else if (endX - startX > 40) {
-                    zoomIndex = (zoomIndex - 1 + images.length) % images.length;
-                    updateZoomImage();
-                }
-            }
-
-            // Click background to close
             overlay.addEventListener("click", (e) => {
-                if (isDragging) return;
-                if (e.target === overlay) {
-                    overlay.remove();
-                }
+                if (e.target === overlay) overlay.remove();
             });
         });
 
         // ==================== SLIDER MAIN LOGIC ====================
         images.forEach(img => img.classList.remove("active"));
-        images[0].classList.add("active");
+        if (images.length > 0) images[0].classList.add("active");
 
         let index = 0;
         let startX = 0;
@@ -240,9 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const card = slider.parentElement;
         const dotsContainer = card.querySelector(".dots");
 
-        if (!dotsContainer || !dotsContainer.classList.contains("dots")) {
-            return;
-        }
+        if (!dotsContainer || !dotsContainer.classList.contains("dots")) return;
 
         // Tạo dots
         images.forEach((_, i) => {
@@ -269,30 +288,16 @@ document.addEventListener("DOMContentLoaded", function () {
             updateDots();
         }
 
-        function next() {
-            show(index + 1);
-        }
+        function next() { show(index + 1); }
+        function prev() { show(index - 1); }
 
-        function prev() {
-            show(index - 1);
-        }
-
-        function startAuto() {
-            autoPlay = setInterval(next, 3000);
-        }
-
-        function stopAuto() {
-            clearInterval(autoPlay);
-        }
-
-        function resetAuto() {
-            stopAuto();
-            startAuto();
-        }
+        function startAuto() { autoPlay = setInterval(next, 3000); }
+        function stopAuto() { clearInterval(autoPlay); }
+        function resetAuto() { stopAuto(); startAuto(); }
 
         startAuto();
 
-        // Swipe cho slider
+        // Swipe cho slider chính
         slider.addEventListener("touchstart", e => {
             startX = e.touches[0].clientX;
             stopAuto();
