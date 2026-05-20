@@ -12,20 +12,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const contactMethod = document.getElementById("contact-method").value;
             let contactLink = "";
 
-            // FACEBOOK
             if (contactMethod === "facebook") {
                 contactLink = "https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN";
-            }
-            // ZALO
-            else if (contactMethod === "zalo") {
+            } else if (contactMethod === "zalo") {
                 contactLink = "https://zalo.me/359195743";
-            }
-            // PHONE
-            else if (contactMethod === "phone") {
+            } else if (contactMethod === "phone") {
                 contactLink = "tel:+84359195743";
             }
 
-            // OPEN LINK
             if (contactLink !== "") {
                 window.location.href = contactLink;
             }
@@ -131,26 +125,31 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.style.width = "100%";
             overlay.style.height = "100%";
             overlay.style.background = "rgba(0,0,0,0.92)";
-            overlay.style.display = "flex";
-            overlay.style.justifyContent = "center";
-            overlay.style.alignItems = "center";
             overlay.style.zIndex = "99999";
+
+            // Container cho ảnh + mũi tên
+            const container = document.createElement("div");
+            container.style.position = "relative";
+            container.style.maxWidth = "92%";
+            container.style.maxHeight = "92%";
 
             const image = document.createElement("img");
             image.src = images[zoomIndex].src;
-            image.style.maxWidth = "92%";
-            image.style.maxHeight = "92%";
+            image.style.width = "100%";
+            image.style.height = "auto";
             image.style.borderRadius = "18px";
             image.style.boxShadow = "0 10px 40px rgba(0,0,0,0.5)";
-            image.style.transition = "transform 0.3s";
+            image.style.display = "block";
 
             // Left Arrow
             const leftArrow = document.createElement("div");
             leftArrow.innerHTML = "❮";
             leftArrow.style.position = "absolute";
-            leftArrow.style.left = "20px";
-            leftArrow.style.fontSize = "50px";
-            leftArrow.style.color = "rgba(255,255,255,0.85)";
+            leftArrow.style.left = "-70px";
+            leftArrow.style.top = "50%";
+            leftArrow.style.transform = "translateY(-50%)";
+            leftArrow.style.fontSize = "55px";
+            leftArrow.style.color = "rgba(255,255,255,0.9)";
             leftArrow.style.cursor = "pointer";
             leftArrow.style.userSelect = "none";
             leftArrow.style.zIndex = "100000";
@@ -160,37 +159,40 @@ document.addEventListener("DOMContentLoaded", function () {
             const rightArrow = document.createElement("div");
             rightArrow.innerHTML = "❯";
             rightArrow.style.position = "absolute";
-            rightArrow.style.right = "20px";
-            rightArrow.style.fontSize = "50px";
-            rightArrow.style.color = "rgba(255,255,255,0.85)";
+            rightArrow.style.right = "-70px";
+            rightArrow.style.top = "50%";
+            rightArrow.style.transform = "translateY(-50%)";
+            rightArrow.style.fontSize = "55px";
+            rightArrow.style.color = "rgba(255,255,255,0.9)";
             rightArrow.style.cursor = "pointer";
             rightArrow.style.userSelect = "none";
             rightArrow.style.zIndex = "100000";
             rightArrow.style.transition = "all 0.2s";
 
-            overlay.appendChild(image);
-            overlay.appendChild(leftArrow);
-            overlay.appendChild(rightArrow);
+            container.appendChild(image);
+            container.appendChild(leftArrow);
+            container.appendChild(rightArrow);
+            overlay.appendChild(container);
             document.body.appendChild(overlay);
 
             overlay.tabIndex = 0;
             overlay.focus();
 
-            function updateZoomImage() {
+            function updateImage() {
                 image.src = images[zoomIndex].src;
             }
 
             function goToNext() {
                 zoomIndex = (zoomIndex + 1) % images.length;
-                updateZoomImage();
+                updateImage();
             }
 
             function goToPrev() {
                 zoomIndex = (zoomIndex - 1 + images.length) % images.length;
-                updateZoomImage();
+                updateImage();
             }
 
-            // Arrow Click
+            // Click mũi tên
             leftArrow.addEventListener("click", (e) => {
                 e.stopImmediatePropagation();
                 goToPrev();
@@ -205,46 +207,34 @@ document.addEventListener("DOMContentLoaded", function () {
             [leftArrow, rightArrow].forEach(arrow => {
                 arrow.addEventListener("mouseenter", () => {
                     arrow.style.color = "#fff";
-                    arrow.style.transform = "scale(1.2)";
+                    arrow.style.transform = "translateY(-50%) scale(1.15)";
                 });
                 arrow.addEventListener("mouseleave", () => {
-                    arrow.style.color = "rgba(255,255,255,0.85)";
-                    arrow.style.transform = "scale(1)";
+                    arrow.style.color = "rgba(255,255,255,0.9)";
+                    arrow.style.transform = "translateY(-50%) scale(1)";
                 });
             });
 
-            // Swipe, Drag, Keyboard
+            // Touch swipe
             let startX = 0;
-            let isDragging = false;
+            overlay.addEventListener("touchstart", e => {
+                startX = e.touches[0].clientX;
+            });
 
-            overlay.addEventListener("touchstart", e => startX = e.touches[0].clientX);
             overlay.addEventListener("touchend", e => {
                 let endX = e.changedTouches[0].clientX;
                 if (startX - endX > 50) goToNext();
                 else if (endX - startX > 50) goToPrev();
             });
 
-            overlay.addEventListener("mousedown", e => {
-                isDragging = true;
-                startX = e.clientX;
-            });
-
-            overlay.addEventListener("mousemove", e => {
-                if (!isDragging) return;
-                let moveX = e.clientX;
-                if (startX - moveX > 80) { goToNext(); startX = moveX; }
-                else if (moveX - startX > 80) { goToPrev(); startX = moveX; }
-            });
-
-            overlay.addEventListener("mouseup", () => isDragging = false);
-            overlay.addEventListener("mouseleave", () => isDragging = false);
-
+            // Keyboard
             overlay.addEventListener("keydown", e => {
                 if (e.key === "ArrowRight") goToNext();
                 else if (e.key === "ArrowLeft") goToPrev();
                 else if (e.key === "Escape") overlay.remove();
             });
 
+            // Click ngoài để đóng
             overlay.addEventListener("click", (e) => {
                 if (e.target === overlay) overlay.remove();
             });
@@ -263,7 +253,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!dotsContainer || !dotsContainer.classList.contains("dots")) return;
 
-        // Tạo dots
         images.forEach((_, i) => {
             const dot = document.createElement("span");
             if (i === 0) dot.classList.add("active");
@@ -297,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         startAuto();
 
-        // Swipe cho slider chính
+        // Swipe slider
         slider.addEventListener("touchstart", e => {
             startX = e.touches[0].clientX;
             stopAuto();
