@@ -480,11 +480,12 @@ function handleSwipe(endX) {
     }
 });
    
-});/* ĐÓNG slider.addEventListener("click"... ) Ở ĐÂY */
+}); 
+       /* ===== END ZOOM CLICK ===== */
 
        /* ===== SLIDER CHÍNH ===== */
        
-images.forEach(img => img.classList.remove("active"));
+        images.forEach(img => img.classList.remove("active"));
         images[0].classList.add("active");
         let index = 0;
         let startX = 0;
@@ -497,6 +498,7 @@ images.forEach(img => img.classList.remove("active"));
         if (!dotsContainer || !dotsContainer.classList.contains("dots")) {
             return; // nếu không có dots thì bỏ qua
         }
+       dotsContainer.innerHTML = "";
 
         // ===== tạo dots =====
         images.forEach((_, i) => {
