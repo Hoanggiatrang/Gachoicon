@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // FACEBOOK
             if (contactMethod === "facebook") {
-                contactLink = "https://web.facebook.com/Gachoianlaohaiphong?locale=vi_VN";
+                contactLink = "https://www.facebook.com/Hoanggiatrangminifarm/";
             }
             // ZALO
             else if (contactMethod === "zalo") {
