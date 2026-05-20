@@ -524,4 +524,6 @@ footer{
 .dots span.active {
     background: #333;
 }
-
+.image-slider img {
+    display: block;
+}
