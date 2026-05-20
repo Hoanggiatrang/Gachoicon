@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             overlay.appendChild(image);
             document.body.appendChild(overlay);
+
             overlay.addEventListener("click", () => overlay.remove());
         });
     });
@@ -124,12 +125,9 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.style.width = "100%";
             overlay.style.height = "100%";
             overlay.style.background = "rgba(0,0,0,0.92)";
-            overlay.style.display = "flex";
-            overlay.style.justifyContent = "center";
-            overlay.style.alignItems = "center";
             overlay.style.zIndex = "99999";
 
-            // Container chứa ảnh + mũi tên
+            // Container cho ảnh + mũi tên
             const container = document.createElement("div");
             container.style.position = "relative";
             container.style.maxWidth = "92%";
@@ -147,31 +145,29 @@ document.addEventListener("DOMContentLoaded", function () {
             const leftArrow = document.createElement("div");
             leftArrow.innerHTML = "❮";
             leftArrow.style.position = "absolute";
-            leftArrow.style.left = "-60px";
+            leftArrow.style.left = "-70px";
             leftArrow.style.top = "50%";
             leftArrow.style.transform = "translateY(-50%)";
-            leftArrow.style.fontSize = "50px";
+            leftArrow.style.fontSize = "55px";
             leftArrow.style.color = "rgba(255,255,255,0.9)";
             leftArrow.style.cursor = "pointer";
             leftArrow.style.userSelect = "none";
             leftArrow.style.zIndex = "100000";
             leftArrow.style.transition = "all 0.2s";
-            leftArrow.style.padding = "10px";
 
             // Right Arrow
             const rightArrow = document.createElement("div");
             rightArrow.innerHTML = "❯";
             rightArrow.style.position = "absolute";
-            rightArrow.style.right = "-60px";
+            rightArrow.style.right = "-70px";
             rightArrow.style.top = "50%";
             rightArrow.style.transform = "translateY(-50%)";
-            rightArrow.style.fontSize = "50px";
+            rightArrow.style.fontSize = "55px";
             rightArrow.style.color = "rgba(255,255,255,0.9)";
             rightArrow.style.cursor = "pointer";
             rightArrow.style.userSelect = "none";
             rightArrow.style.zIndex = "100000";
             rightArrow.style.transition = "all 0.2s";
-            rightArrow.style.padding = "10px";
 
             container.appendChild(image);
             container.appendChild(leftArrow);
@@ -197,21 +193,21 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Click mũi tên
-            leftArrow.addEventListener("click", e => {
+            leftArrow.addEventListener("click", (e) => {
                 e.stopImmediatePropagation();
                 goToPrev();
             });
 
-            rightArrow.addEventListener("click", e => {
+            rightArrow.addEventListener("click", (e) => {
                 e.stopImmediatePropagation();
                 goToNext();
             });
 
-            // Hover effect (PC)
+            // Hover effect
             [leftArrow, rightArrow].forEach(arrow => {
                 arrow.addEventListener("mouseenter", () => {
                     arrow.style.color = "#fff";
-                    arrow.style.transform = "translateY(-50%) scale(1.2)";
+                    arrow.style.transform = "translateY(-50%) scale(1.15)";
                 });
                 arrow.addEventListener("mouseleave", () => {
                     arrow.style.color = "rgba(255,255,255,0.9)";
@@ -221,7 +217,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Touch swipe
             let startX = 0;
-            overlay.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+            overlay.addEventListener("touchstart", e => {
+                startX = e.touches[0].clientX;
+            });
+
             overlay.addEventListener("touchend", e => {
                 let endX = e.changedTouches[0].clientX;
                 if (startX - endX > 50) goToNext();
@@ -235,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 else if (e.key === "Escape") overlay.remove();
             });
 
-            // Click overlay để đóng
+            // Click ngoài để đóng
             overlay.addEventListener("click", (e) => {
                 if (e.target === overlay) overlay.remove();
             });
@@ -251,6 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const card = slider.parentElement;
         const dotsContainer = card.querySelector(".dots");
+
         if (!dotsContainer || !dotsContainer.classList.contains("dots")) return;
 
         images.forEach((_, i) => {
