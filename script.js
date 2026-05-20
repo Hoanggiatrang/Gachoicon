@@ -1,4 +1,4 @@
-/* =========================================
+ "/* =========================================
    WAIT UNTIL HTML LOAD
 ========================================= */
 
@@ -195,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 "0 10px 40px rgba(0,0,0,0.4)";
 
                 overlay.appendChild(image);
-              
 
                 document.body.appendChild(
                     overlay
@@ -295,115 +294,16 @@ overlay.focus();
 
         image.src = images[zoomIndex].src;
     }
-   /* ===== LEFT BUTTON ===== */
-
-const prevBtn =
-document.createElement("div");
-
-prevBtn.innerHTML = "❮";
-
-prevBtn.style.position = "absolute";
-prevBtn.style.left = "25px";
-prevBtn.style.top = "50%";
-
-prevBtn.style.transform =
-"translateY(-50%)";
-
-prevBtn.style.fontSize = "48px";
-
-prevBtn.style.color = "white";
-
-prevBtn.style.cursor = "pointer";
-
-prevBtn.style.userSelect = "none";
-
-prevBtn.style.padding =
-"10px 18px";
-
-prevBtn.style.borderRadius =
-"50%";
-
-prevBtn.style.background =
-"rgba(0,0,0,0.25)";
-
-prevBtn.style.zIndex = "100000";
-
-
-/* ===== RIGHT BUTTON ===== */
-
-const nextBtn =
-document.createElement("div");
-
-nextBtn.innerHTML = "❯";
-
-nextBtn.style.position = "absolute";
-
-nextBtn.style.right = "25px";
-
-nextBtn.style.top = "50%";
-
-nextBtn.style.transform =
-"translateY(-50%)";
-
-nextBtn.style.fontSize = "48px";
-
-nextBtn.style.color = "white";
-
-nextBtn.style.cursor = "pointer";
-
-nextBtn.style.userSelect = "none";
-
-nextBtn.style.padding =
-"10px 18px";
-
-nextBtn.style.borderRadius =
-"50%";
-
-nextBtn.style.background =
-"rgba(0,0,0,0.25)";
-
-nextBtn.style.zIndex = "100000";
-
-
-/* ===== BUTTON EVENTS ===== */
-
-prevBtn.addEventListener("click", e => {
-
-    e.stopPropagation();
-
-    zoomIndex =
-    (zoomIndex - 1 + images.length)
-    % images.length;
-
-    updateZoomImage();
-});
-
-nextBtn.addEventListener("click", e => {
-
-    e.stopPropagation();
-
-    zoomIndex =
-    (zoomIndex + 1)
-    % images.length;
-
-    updateZoomImage();
-});
-
-
-/* ===== ADD BUTTON ===== */
-
-overlay.appendChild(prevBtn);
-
-overlay.appendChild(nextBtn);
 
     // ===== swipe trong zoom =====
 
-let zoomStartX = 0;
+let startX = 0;
+
 /* ===== MOBILE SWIPE ===== */
 
 overlay.addEventListener("touchstart", e => {
 
-    zoomStartX = e.touches[0].clientX;
+    startX = e.touches[0].clientX;
 });
 
 overlay.addEventListener("touchend", e => {
@@ -413,9 +313,56 @@ overlay.addEventListener("touchend", e => {
     handleSwipe(endX);
 });
 
+/* ===== PC DRAG ===== */
 
+let isDragging = false;
 
-   
+overlay.addEventListener("mousedown", e => {
+
+    isDragging = true;
+
+    startX = e.clientX;
+});
+
+overlay.addEventListener("mousemove", e => {
+
+    if (!isDragging) return;
+
+    let moveX = e.clientX;
+
+    // kéo trái
+    if (startX - moveX > 80) {
+
+        zoomIndex =
+        (zoomIndex + 1) % images.length;
+
+        updateZoomImage();
+
+        startX = moveX;
+    }
+
+    // kéo phải
+    else if (moveX - startX > 80) {
+
+        zoomIndex =
+        (zoomIndex - 1 + images.length)
+        % images.length;
+
+        updateZoomImage();
+
+        startX = moveX;
+    }
+});
+
+overlay.addEventListener("mouseup", () => {
+
+    isDragging = false;
+});
+
+overlay.addEventListener("mouseleave", () => {
+
+    isDragging = false;
+});
 /* ===== KEYBOARD ===== */
 
 overlay.addEventListener("keydown", e => {
@@ -450,7 +397,7 @@ overlay.addEventListener("keydown", e => {
 function handleSwipe(endX) {
 
     // vuốt trái
-    if (zoomStartX - endX > 40) {
+    if (startX - endX > 40) {
 
         zoomIndex =
         (zoomIndex + 1) % images.length;
@@ -459,7 +406,7 @@ function handleSwipe(endX) {
     }
 
     // vuốt phải
-    else if (endX - zoomStartX > 40) {
+    else if (endX - startX > 40) {
 
         zoomIndex =
         (zoomIndex - 1 + images.length)
@@ -474,17 +421,12 @@ function handleSwipe(endX) {
     overlay.addEventListener("click", (e) => {
 
     // nếu đang drag thì không đóng
+if (isDragging) return;
     if (e.target === overlay) {
 
         overlay.remove();
     }
 });
-   
-}); 
-       /* ===== END ZOOM CLICK ===== */
-
-       /* ===== SLIDER CHÍNH ===== */
-       
         images.forEach(img => img.classList.remove("active"));
         images[0].classList.add("active");
         let index = 0;
@@ -498,7 +440,6 @@ function handleSwipe(endX) {
         if (!dotsContainer || !dotsContainer.classList.contains("dots")) {
             return; // nếu không có dots thì bỏ qua
         }
-       dotsContainer.innerHTML = "";
 
         // ===== tạo dots =====
         images.forEach((_, i) => {
@@ -577,4 +518,4 @@ function handleSwipe(endX) {
         });
 
     });
-});
+});"
