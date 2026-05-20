@@ -398,13 +398,12 @@ overlay.appendChild(nextBtn);
 
     // ===== swipe trong zoom =====
 
-let startX = 0;
-
+let zoomStartX = 0;
 /* ===== MOBILE SWIPE ===== */
 
 overlay.addEventListener("touchstart", e => {
 
-    startX = e.touches[0].clientX;
+    zoomStartX = e.touches[0].clientX;
 });
 
 overlay.addEventListener("touchend", e => {
@@ -451,7 +450,7 @@ overlay.addEventListener("keydown", e => {
 function handleSwipe(endX) {
 
     // vuốt trái
-    if (startX - endX > 40) {
+    if (zoomStartX - endX > 40) {
 
         zoomIndex =
         (zoomIndex + 1) % images.length;
@@ -460,7 +459,7 @@ function handleSwipe(endX) {
     }
 
     // vuốt phải
-    else if (endX - startX > 40) {
+    else if (endX - zoomStartX > 40) {
 
         zoomIndex =
         (zoomIndex - 1 + images.length)
@@ -480,8 +479,11 @@ function handleSwipe(endX) {
         overlay.remove();
     }
 });
-/* ĐÓNG slider.addEventListener("click"... ) Ở ĐÂY */
-});
+   
+});/* ĐÓNG slider.addEventListener("click"... ) Ở ĐÂY */
+
+       /* ===== SLIDER CHÍNH ===== */
+       
 images.forEach(img => img.classList.remove("active"));
         images[0].classList.add("active");
         let index = 0;
