@@ -1,4 +1,4 @@
-thôi đừng vuốt chuột nữ, tạo 2 cái mũi tên 2 bên góc ảnh. người ta bấm vào thì chuyển ảnh, nó sẽ ok hơn đấy mon "/* =========================================
+/* =========================================
    WAIT UNTIL HTML LOAD
 ========================================= */
 
@@ -518,4 +518,4 @@ if (isDragging) return;
         });
 
     });
-});"
+});
