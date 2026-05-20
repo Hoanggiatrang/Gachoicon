@@ -327,18 +327,22 @@ slider.addEventListener("click", () => {
             dots.forEach(d => d.classList.remove("active"));
             dots[index].classList.add("active");
         }
+       function show(i) {
 
-        function show(i) {
+    index = (i + images.length) % images.length;
 
-            images[index].classList.remove("active");
+    // xóa active khỏi tất cả ảnh
+    images.forEach(img => {
+        img.classList.remove("active");
+    });
 
-            index = (i + images.length) % images.length;
+    // bật ảnh hiện tại
+    images[index].classList.add("active");
 
-            images[index].classList.add("active");
+    updateDots();
+}
 
-            updateDots();
-        }
-
+        
         function next() {
             show(index + 1);
         }
