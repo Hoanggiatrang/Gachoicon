@@ -1,4 +1,4 @@
-/* =========================================
+"/* =========================================
    WAIT UNTIL HTML LOAD
 ========================================= */
 
@@ -315,53 +315,24 @@ overlay.addEventListener("touchend", e => {
 
 /* ===== PC DRAG ===== */
 
-let isDragging = false;
+let isMouseDown = false;
 
 overlay.addEventListener("mousedown", e => {
 
-    isDragging = true;
+    isMouseDown = true;
 
     startX = e.clientX;
 });
 
-overlay.addEventListener("mousemove", e => {
+overlay.addEventListener("mouseup", e => {
 
-    if (!isDragging) return;
+    if (!isMouseDown) return;
 
-    let moveX = e.clientX;
+    let endX = e.clientX;
 
-    // kéo trái
-    if (startX - moveX > 80) {
+    handleSwipe(endX);
 
-        zoomIndex =
-        (zoomIndex + 1) % images.length;
-
-        updateZoomImage();
-
-        startX = moveX;
-    }
-
-    // kéo phải
-    else if (moveX - startX > 80) {
-
-        zoomIndex =
-        (zoomIndex - 1 + images.length)
-        % images.length;
-
-        updateZoomImage();
-
-        startX = moveX;
-    }
-});
-
-overlay.addEventListener("mouseup", () => {
-
-    isDragging = false;
-});
-
-overlay.addEventListener("mouseleave", () => {
-
-    isDragging = false;
+    isMouseDown = false;
 });
 /* ===== KEYBOARD ===== */
 
@@ -421,7 +392,8 @@ function handleSwipe(endX) {
     overlay.addEventListener("click", (e) => {
 
     // nếu đang drag thì không đóng
-if (isDragging) return;
+    if (isMouseDown) return;
+
     if (e.target === overlay) {
 
         overlay.remove();
