@@ -321,7 +321,7 @@ overlay.addEventListener("mousedown", e => {
     startX = e.clientX;
 });
 
-overlay.addEventListener("mousemove", e => {
+document.addEventListener("mousemove", e => {
 
     if (!isDragging) return;
 
@@ -335,7 +335,7 @@ overlay.addEventListener("mousemove", e => {
 
         updateZoomImage();
 
-        isDragging = false;
+        startX = endX;
     }
 
     // kéo phải
@@ -347,16 +347,11 @@ overlay.addEventListener("mousemove", e => {
 
         updateZoomImage();
 
-        isDragging = false;
+        startX = endX;
     }
 });
 
-overlay.addEventListener("mouseup", () => {
-
-    isDragging = false;
-});
-
-overlay.addEventListener("mouseleave", () => {
+document.addEventListener("mouseup", () => {
 
     isDragging = false;
 });
