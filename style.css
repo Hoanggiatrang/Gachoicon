@@ -478,6 +478,7 @@ footer{
     .gallery img{
         height:220px;
     }
+
    
 .image-slider {
     position: relative;
@@ -523,7 +524,5 @@ footer{
 
 .dots span.active {
     background: #333;
-}
-.image-slider img {
-    display: block;
-}
+}   
+
