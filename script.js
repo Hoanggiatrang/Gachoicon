@@ -311,7 +311,11 @@ prevBtn.style.top = "50%";
 prevBtn.style.transform =
 "translateY(-50%)";
 
-prevBtn.style.fontSize = "48px";
+prevBtn.style.fontSize = "28px";
+
+prevBtn.style.width = "42px";
+
+prevBtn.style.height = "42px";
 
 prevBtn.style.color = "white";
 
@@ -319,17 +323,26 @@ prevBtn.style.cursor = "pointer";
 
 prevBtn.style.userSelect = "none";
 
-prevBtn.style.padding =
-"10px 18px";
+prevBtn.style.display = "flex";
 
-prevBtn.style.borderRadius =
-"50%";
+prevBtn.style.alignItems = "center";
+
+prevBtn.style.justifyContent = "center";
+
+prevBtn.style.borderRadius = "50%";
 
 prevBtn.style.background =
-"rgba(0,0,0,0.25)";
+"rgba(255,255,255,0.12)";
+
+prevBtn.style.backdropFilter =
+"blur(4px)";
+
+prevBtn.style.touchAction =
+"manipulation";
 
 prevBtn.style.zIndex = "100000";
 
+ 
 /* ===== RIGHT BUTTON ===== */
 
 const nextBtn =
@@ -346,7 +359,11 @@ nextBtn.style.top = "50%";
 nextBtn.style.transform =
 "translateY(-50%)";
 
-nextBtn.style.fontSize = "48px";
+nextBtn.style.fontSize = "28px";
+
+nextBtn.style.width = "42px";
+
+nextBtn.style.height = "42px";
 
 nextBtn.style.color = "white";
 
@@ -354,14 +371,22 @@ nextBtn.style.cursor = "pointer";
 
 nextBtn.style.userSelect = "none";
 
-nextBtn.style.padding =
-"10px 18px";
+nextBtn.style.display = "flex";
 
-nextBtn.style.borderRadius =
-"50%";
+nextBtn.style.alignItems = "center";
+
+nextBtn.style.justifyContent = "center";
+
+nextBtn.style.borderRadius = "50%";
 
 nextBtn.style.background =
-"rgba(0,0,0,0.25)";
+"rgba(255,255,255,0.12)";
+
+nextBtn.style.backdropFilter =
+"blur(4px)";
+
+nextBtn.style.touchAction =
+"manipulation";
 
 nextBtn.style.zIndex = "100000";
 
