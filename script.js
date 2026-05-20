@@ -1,4 +1,4 @@
-"/* =========================================
+/* =========================================
    WAIT UNTIL HTML LOAD
 ========================================= */
 
@@ -292,8 +292,108 @@ overlay.focus();
 
     function updateZoomImage() {
 
-        image.src = images[zoomIndex].src;
-    }
+    image.src = images[zoomIndex].src;
+}
+
+/* ===== LEFT BUTTON ===== */
+
+const prevBtn =
+document.createElement("div");
+
+prevBtn.innerHTML = "❮";
+
+prevBtn.style.position = "absolute";
+
+prevBtn.style.left = "25px";
+
+prevBtn.style.top = "50%";
+
+prevBtn.style.transform =
+"translateY(-50%)";
+
+prevBtn.style.fontSize = "48px";
+
+prevBtn.style.color = "white";
+
+prevBtn.style.cursor = "pointer";
+
+prevBtn.style.userSelect = "none";
+
+prevBtn.style.padding =
+"10px 18px";
+
+prevBtn.style.borderRadius =
+"50%";
+
+prevBtn.style.background =
+"rgba(0,0,0,0.25)";
+
+prevBtn.style.zIndex = "100000";
+
+/* ===== RIGHT BUTTON ===== */
+
+const nextBtn =
+document.createElement("div");
+
+nextBtn.innerHTML = "❯";
+
+nextBtn.style.position = "absolute";
+
+nextBtn.style.right = "25px";
+
+nextBtn.style.top = "50%";
+
+nextBtn.style.transform =
+"translateY(-50%)";
+
+nextBtn.style.fontSize = "48px";
+
+nextBtn.style.color = "white";
+
+nextBtn.style.cursor = "pointer";
+
+nextBtn.style.userSelect = "none";
+
+nextBtn.style.padding =
+"10px 18px";
+
+nextBtn.style.borderRadius =
+"50%";
+
+nextBtn.style.background =
+"rgba(0,0,0,0.25)";
+
+nextBtn.style.zIndex = "100000";
+
+/* ===== BUTTON EVENTS ===== */
+
+prevBtn.addEventListener("click", e => {
+
+    e.stopPropagation();
+
+    zoomIndex =
+    (zoomIndex - 1 + images.length)
+    % images.length;
+
+    updateZoomImage();
+});
+
+nextBtn.addEventListener("click", e => {
+
+    e.stopPropagation();
+
+    zoomIndex =
+    (zoomIndex + 1)
+    % images.length;
+
+    updateZoomImage();
+});
+
+/* ===== ADD BUTTON ===== */
+
+overlay.appendChild(prevBtn);
+
+overlay.appendChild(nextBtn);
 
     // ===== swipe trong zoom =====
 
@@ -315,24 +415,53 @@ overlay.addEventListener("touchend", e => {
 
 /* ===== PC DRAG ===== */
 
-let isMouseDown = false;
+let isDragging = false;
 
 overlay.addEventListener("mousedown", e => {
 
-    isMouseDown = true;
+    isDragging = true;
 
     startX = e.clientX;
 });
 
-overlay.addEventListener("mouseup", e => {
+overlay.addEventListener("mousemove", e => {
 
-    if (!isMouseDown) return;
+    if (!isDragging) return;
 
-    let endX = e.clientX;
+    let moveX = e.clientX;
 
-    handleSwipe(endX);
+    // kéo trái
+    if (startX - moveX > 80) {
 
-    isMouseDown = false;
+        zoomIndex =
+        (zoomIndex + 1) % images.length;
+
+        updateZoomImage();
+
+        startX = moveX;
+    }
+
+    // kéo phải
+    else if (moveX - startX > 80) {
+
+        zoomIndex =
+        (zoomIndex - 1 + images.length)
+        % images.length;
+
+        updateZoomImage();
+
+        startX = moveX;
+    }
+});
+
+overlay.addEventListener("mouseup", () => {
+
+    isDragging = false;
+});
+
+overlay.addEventListener("mouseleave", () => {
+
+    isDragging = false;
 });
 /* ===== KEYBOARD ===== */
 
@@ -392,8 +521,7 @@ function handleSwipe(endX) {
     overlay.addEventListener("click", (e) => {
 
     // nếu đang drag thì không đóng
-    if (isMouseDown) return;
-
+if (isDragging) return;
     if (e.target === overlay) {
 
         overlay.remove();
