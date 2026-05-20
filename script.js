@@ -294,38 +294,39 @@ slider.addEventListener("click", () => {
 
     // ===== swipe trong zoom =====
 
-    let touchStartX = 0;
+let touchStartX = 0;
+let touchEndX = 0;
 
-    overlay.addEventListener("touchstart", e => {
+overlay.addEventListener("touchstart", e => {
 
-        touchStartX =
-        e.touches[0].clientX;
-    });
+    touchStartX =
+    e.changedTouches[0].screenX;
+});
 
-    overlay.addEventListener("touchend", e => {
+overlay.addEventListener("touchend", e => {
 
-        let touchEndX =
-        e.changedTouches[0].clientX;
+    touchEndX =
+    e.changedTouches[0].screenX;
 
-        // vuốt trái
-        if (touchStartX - touchEndX > 40) {
+    // vuốt trái
+    if (touchStartX - touchEndX > 50) {
 
-            zoomIndex =
-            (zoomIndex + 1) % images.length;
+        zoomIndex =
+        (zoomIndex + 1) % images.length;
 
-            updateZoomImage();
-        }
+        updateZoomImage();
+    }
 
-        // vuốt phải
-        else if (touchEndX - touchStartX > 40) {
+    // vuốt phải
+    if (touchEndX - touchStartX > 50) {
 
-            zoomIndex =
-            (zoomIndex - 1 + images.length)
-            % images.length;
+        zoomIndex =
+        (zoomIndex - 1 + images.length)
+        % images.length;
 
-            updateZoomImage();
-        }
-    });
+        updateZoomImage();
+    }
+});
 
     // click nền để đóng
 
