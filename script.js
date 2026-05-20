@@ -1,13 +1,10 @@
 /* =========================================
    WAIT UNTIL HTML LOAD
 ========================================= */
-
 document.addEventListener("DOMContentLoaded", function () {
-
     /* =========================================
        CONTACT FORM
     ========================================= */
-
     const contactForm = document.getElementById("contact-form");
 
     if (contactForm) {
@@ -30,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 contactLink = "tel:+84359195743";
             }
 
+            // OPEN LINK
             if (contactLink !== "") {
                 window.location.href = contactLink;
             }
@@ -39,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     /* =========================================
        SMOOTH HEADER SHADOW
     ========================================= */
-
     window.addEventListener("scroll", function () {
         const header = document.querySelector("header");
         if (!header) return;
@@ -56,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
     /* =========================================
        SCROLL ANIMATION
     ========================================= */
-
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
@@ -75,53 +71,167 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     /* =========================================
-       IMAGE CLICK ZOOM (Gallery)
+       IMAGE CLICK ZOOM
     ========================================= */
+    const galleryImages = document.querySelectorAll(".gallery img");
 
-    document.querySelectorAll(".gallery img").forEach((img) => {
+    galleryImages.forEach((img) => {
         img.addEventListener("click", () => {
             const overlay = document.createElement("div");
-            overlay.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.88); display: flex;
-                justify-content: center; align-items: center; z-index: 99999;
-                cursor: zoom-out;
-            `;
+            overlay.style.position = "fixed";
+            overlay.style.top = "0";
+            overlay.style.left = "0";
+            overlay.style.width = "100%";
+            overlay.style.height = "100%";
+            overlay.style.background = "rgba(0,0,0,0.88)";
+            overlay.style.display = "flex";
+            overlay.style.justifyContent = "center";
+            overlay.style.alignItems = "center";
+            overlay.style.zIndex = "99999";
+            overlay.style.cursor = "zoom-out";
 
-            const zoomedImg = document.createElement("img");
-            zoomedImg.src = img.src;
-            zoomedImg.style.cssText = `
-                max-width: 92%; max-height: 92%;
-                border-radius: 18px;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            `;
+            const image = document.createElement("img");
+            image.src = img.src;
+            image.style.maxWidth = "92%";
+            image.style.maxHeight = "92%";
+            image.style.borderRadius = "18px";
+            image.style.boxShadow = "0 10px 40px rgba(0,0,0,0.4)";
 
-            overlay.appendChild(zoomedImg);
+            overlay.appendChild(image);
             document.body.appendChild(overlay);
 
-            overlay.addEventListener("click", () => overlay.remove());
+            overlay.addEventListener("click", () => {
+                overlay.remove();
+            });
         });
     });
 
     /* =========================================
        PARALLAX HERO
     ========================================= */
-
     window.addEventListener("scroll", () => {
         const hero = document.querySelector("#hero");
         if (!hero) return;
 
-        const offset = window.pageYOffset;
+        let offset = window.pageYOffset;
         hero.style.backgroundPositionY = offset * 0.4 + "px";
     });
 
     /* =========================================
-       IMAGE SLIDER + DOTS + SWIPE + AUTO PLAY + ZOOM
+       IMAGE SLIDER + DOTS + SWIPE + AUTO PLAY
     ========================================= */
-
     document.querySelectorAll(".image-slider").forEach(slider => {
         const images = slider.querySelectorAll("img");
-        if (images.length === 0) return;
+
+        /* ===== ZOOM + SWIPE INSIDE ZOOM ===== */
+        slider.addEventListener("click", () => {
+            const activeImage = slider.querySelector("img.active");
+            if (!activeImage) return;
+
+            let zoomIndex = Array.from(images).indexOf(activeImage);
+
+            const overlay = document.createElement("div");
+            overlay.style.position = "fixed";
+            overlay.style.top = "0";
+            overlay.style.left = "0";
+            overlay.style.width = "100%";
+            overlay.style.height = "100%";
+            overlay.style.background = "rgba(0,0,0,0.92)";
+            overlay.style.display = "flex";
+            overlay.style.justifyContent = "center";
+            overlay.style.alignItems = "center";
+            overlay.style.zIndex = "99999";
+
+            const image = document.createElement("img");
+            image.src = images[zoomIndex].src;
+            image.style.maxWidth = "92%";
+            image.style.maxHeight = "92%";
+            image.style.borderRadius = "18px";
+
+            overlay.appendChild(image);
+            document.body.appendChild(overlay);
+
+            overlay.tabIndex = 0;
+            overlay.focus();
+
+            function updateZoomImage() {
+                image.src = images[zoomIndex].src;
+            }
+
+            // Swipe & Drag variables
+            let startX = 0;
+            let isDragging = false;
+
+            /* ===== MOBILE SWIPE ===== */
+            overlay.addEventListener("touchstart", e => {
+                startX = e.touches[0].clientX;
+            });
+
+            overlay.addEventListener("touchend", e => {
+                let endX = e.changedTouches[0].clientX;
+                handleSwipe(endX);
+            });
+
+            /* ===== PC DRAG ===== */
+            overlay.addEventListener("mousedown", e => {
+                isDragging = true;
+                startX = e.clientX;
+            });
+
+            overlay.addEventListener("mousemove", e => {
+                if (!isDragging) return;
+                let moveX = e.clientX;
+
+                if (startX - moveX > 80) {
+                    zoomIndex = (zoomIndex + 1) % images.length;
+                    updateZoomImage();
+                    startX = moveX;
+                } else if (moveX - startX > 80) {
+                    zoomIndex = (zoomIndex - 1 + images.length) % images.length;
+                    updateZoomImage();
+                    startX = moveX;
+                }
+            });
+
+            overlay.addEventListener("mouseup", () => { isDragging = false; });
+            overlay.addEventListener("mouseleave", () => { isDragging = false; });
+
+            /* ===== KEYBOARD ===== */
+            overlay.addEventListener("keydown", e => {
+                if (e.key === "ArrowRight") {
+                    zoomIndex = (zoomIndex + 1) % images.length;
+                    updateZoomImage();
+                } else if (e.key === "ArrowLeft") {
+                    zoomIndex = (zoomIndex - 1 + images.length) % images.length;
+                    updateZoomImage();
+                } else if (e.key === "Escape") {
+                    overlay.remove();
+                }
+            });
+
+            /* ===== SWIPE FUNCTION ===== */
+            function handleSwipe(endX) {
+                if (startX - endX > 40) {
+                    zoomIndex = (zoomIndex + 1) % images.length;
+                    updateZoomImage();
+                } else if (endX - startX > 40) {
+                    zoomIndex = (zoomIndex - 1 + images.length) % images.length;
+                    updateZoomImage();
+                }
+            }
+
+            // Click background to close
+            overlay.addEventListener("click", (e) => {
+                if (isDragging) return;
+                if (e.target === overlay) {
+                    overlay.remove();
+                }
+            });
+        });
+
+        // ==================== SLIDER MAIN LOGIC ====================
+        images.forEach(img => img.classList.remove("active"));
+        images[0].classList.add("active");
 
         let index = 0;
         let startX = 0;
@@ -130,25 +240,26 @@ document.addEventListener("DOMContentLoaded", function () {
         const card = slider.parentElement;
         const dotsContainer = card.querySelector(".dots");
 
-        // ===== TẠO DOTS =====
-        if (dotsContainer) {
-            images.forEach((_, i) => {
-                const dot = document.createElement("span");
-                if (i === 0) dot.classList.add("active");
-                
-                dot.addEventListener("click", () => {
-                    show(i);
-                    resetAuto();
-                });
-                dotsContainer.appendChild(dot);
-            });
+        if (!dotsContainer || !dotsContainer.classList.contains("dots")) {
+            return;
         }
 
-        const dots = dotsContainer ? dotsContainer.querySelectorAll("span") : [];
+        // Tạo dots
+        images.forEach((_, i) => {
+            const dot = document.createElement("span");
+            if (i === 0) dot.classList.add("active");
+            dot.addEventListener("click", () => {
+                show(i);
+                resetAuto();
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.querySelectorAll("span");
 
         function updateDots() {
             dots.forEach(d => d.classList.remove("active"));
-            if (dots[index]) dots[index].classList.add("active");
+            dots[index].classList.add("active");
         }
 
         function show(i) {
@@ -179,12 +290,9 @@ document.addEventListener("DOMContentLoaded", function () {
             startAuto();
         }
 
-        // Khởi tạo slider
-        images[0].classList.add("active");
-        updateDots();
         startAuto();
 
-        // ===== SWIPE MOBILE =====
+        // Swipe cho slider
         slider.addEventListener("touchstart", e => {
             startX = e.touches[0].clientX;
             stopAuto();
@@ -195,72 +303,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (startX - endX > 40) next();
             else if (endX - startX > 40) prev();
             startAuto();
-        });
-
-        // ===== CLICK ZOOM + SWIPE TRONG ZOOM =====
-        slider.addEventListener("click", (e) => {
-            if (e.target.tagName !== "IMG") return;
-
-            const activeImage = slider.querySelector("img.active");
-            if (!activeImage) return;
-
-            let zoomIndex = Array.from(images).indexOf(activeImage);
-
-            const overlay = document.createElement("div");
-            overlay.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.92); display: flex;
-                justify-content: center; align-items: center; z-index: 99999;
-            `;
-
-            const zoomImg = document.createElement("img");
-            zoomImg.src = images[zoomIndex].src;
-            zoomImg.style.cssText = `
-                max-width: 92%; max-height: 92%;
-                border-radius: 18px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            `;
-
-            overlay.appendChild(zoomImg);
-            document.body.appendChild(overlay);
-            overlay.focus();
-
-            function updateZoomImage() {
-                zoomImg.src = images[zoomIndex].src;
-            }
-
-            // Swipe & Keyboard trong overlay
-            let zoomStartX = 0;
-            let isDragging = false;
-
-            overlay.addEventListener("touchstart", e => zoomStartX = e.touches[0].clientX);
-            overlay.addEventListener("touchend", e => {
-                let endX = e.changedTouches[0].clientX;
-                if (zoomStartX - endX > 40) {
-                    zoomIndex = (zoomIndex + 1) % images.length;
-                    updateZoomImage();
-                } else if (endX - zoomStartX > 40) {
-                    zoomIndex = (zoomIndex - 1 + images.length) % images.length;
-                    updateZoomImage();
-                }
-            });
-
-            // Click đóng overlay
-            overlay.addEventListener("click", (e) => {
-                if (e.target === overlay) overlay.remove();
-            });
-
-            // ESC key
-            overlay.addEventListener("keydown", e => {
-                if (e.key === "Escape") overlay.remove();
-                if (e.key === "ArrowRight") {
-                    zoomIndex = (zoomIndex + 1) % images.length;
-                    updateZoomImage();
-                }
-                if (e.key === "ArrowLeft") {
-                    zoomIndex = (zoomIndex - 1 + images.length) % images.length;
-                    updateZoomImage();
-                }
-            });
         });
     });
 });
