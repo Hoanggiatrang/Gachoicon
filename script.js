@@ -312,16 +312,53 @@ overlay.addEventListener("touchend", e => {
 
 /* ===== PC DRAG ===== */
 
+let isDragging = false;
+
 overlay.addEventListener("mousedown", e => {
+
+    isDragging = true;
 
     startX = e.clientX;
 });
 
-overlay.addEventListener("mouseup", e => {
+overlay.addEventListener("mousemove", e => {
+
+    if (!isDragging) return;
 
     let endX = e.clientX;
 
-    handleSwipe(endX);
+    // kéo trái
+    if (startX - endX > 60) {
+
+        zoomIndex =
+        (zoomIndex + 1) % images.length;
+
+        updateZoomImage();
+
+        isDragging = false;
+    }
+
+    // kéo phải
+    else if (endX - startX > 60) {
+
+        zoomIndex =
+        (zoomIndex - 1 + images.length)
+        % images.length;
+
+        updateZoomImage();
+
+        isDragging = false;
+    }
+});
+
+overlay.addEventListener("mouseup", () => {
+
+    isDragging = false;
+});
+
+overlay.addEventListener("mouseleave", () => {
+
+    isDragging = false;
 });
 
 /* ===== SWIPE FUNCTION ===== */
