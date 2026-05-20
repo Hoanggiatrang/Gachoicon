@@ -292,6 +292,8 @@ document.querySelectorAll(".image-slider img").forEach((img) => {
     document.querySelectorAll(".image-slider").forEach(slider => {
 
         const images = slider.querySelectorAll("img");
+        images.forEach(img => img.classList.remove("active"));
+        images[0].classList.add("active");
         let index = 0;
         let startX = 0;
         let autoPlay;
