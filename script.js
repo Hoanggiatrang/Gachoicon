@@ -242,48 +242,100 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".image-slider").forEach(slider => {
 
         const images = slider.querySelectorAll("img");
-        images.forEach(img => {
+      /* ===== ZOOM + SWIPE INSIDE ZOOM ===== */
 
-    img.addEventListener("click", () => {
+slider.addEventListener("click", () => {
 
-        // chỉ cho zoom ảnh đang active
-        if (!img.classList.contains("active")) return;
+    const activeImage =
+    slider.querySelector("img.active");
 
-        const overlay = document.createElement("div");
+    if (!activeImage) return;
 
-        overlay.style.position = "fixed";
-        overlay.style.top = "0";
-        overlay.style.left = "0";
+    let zoomIndex =
+    Array.from(images).indexOf(activeImage);
 
-        overlay.style.width = "100%";
-        overlay.style.height = "100%";
+    const overlay =
+    document.createElement("div");
 
-        overlay.style.background = "rgba(0,0,0,0.88)";
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
 
-        overlay.style.display = "flex";
-        overlay.style.justifyContent = "center";
-        overlay.style.alignItems = "center";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
 
-        overlay.style.zIndex = "99999";
+    overlay.style.background =
+    "rgba(0,0,0,0.92)";
 
-        const image = document.createElement("img");
+    overlay.style.display = "flex";
+    overlay.style.justifyContent = "center";
+    overlay.style.alignItems = "center";
 
-        image.src = img.src;
+    overlay.style.zIndex = "99999";
 
-        image.style.maxWidth = "92%";
-        image.style.maxHeight = "92%";
+    const image =
+    document.createElement("img");
 
-        image.style.borderRadius = "18px";
+    image.src = images[zoomIndex].src;
 
-        overlay.appendChild(image);
+    image.style.maxWidth = "92%";
+    image.style.maxHeight = "92%";
 
-        document.body.appendChild(overlay);
+    image.style.borderRadius = "18px";
 
-        overlay.addEventListener("click", () => {
-            overlay.remove();
-        });
+    overlay.appendChild(image);
+
+    document.body.appendChild(overlay);
+
+    function updateZoomImage() {
+
+        image.src = images[zoomIndex].src;
+    }
+
+    // ===== swipe trong zoom =====
+
+    let touchStartX = 0;
+
+    overlay.addEventListener("touchstart", e => {
+
+        touchStartX =
+        e.touches[0].clientX;
     });
 
+    overlay.addEventListener("touchend", e => {
+
+        let touchEndX =
+        e.changedTouches[0].clientX;
+
+        // vuốt trái
+        if (touchStartX - touchEndX > 40) {
+
+            zoomIndex =
+            (zoomIndex + 1) % images.length;
+
+            updateZoomImage();
+        }
+
+        // vuốt phải
+        else if (touchEndX - touchStartX > 40) {
+
+            zoomIndex =
+            (zoomIndex - 1 + images.length)
+            % images.length;
+
+            updateZoomImage();
+        }
+    });
+
+    // click nền để đóng
+
+    overlay.addEventListener("click", (e) => {
+
+        if (e.target === overlay) {
+
+            overlay.remove();
+        }
+    });
 });
         images.forEach(img => img.classList.remove("active"));
         images[0].classList.add("active");
