@@ -286,6 +286,9 @@ slider.addEventListener("click", () => {
     overlay.appendChild(image);
 
     document.body.appendChild(overlay);
+   overlay.tabIndex = 0;
+
+overlay.focus();
 
     function updateZoomImage() {
 
@@ -312,47 +315,28 @@ overlay.addEventListener("touchend", e => {
 
 /* ===== PC DRAG ===== */
 
-let isDragging = false;
+let isMouseDown = false;
 
 overlay.addEventListener("mousedown", e => {
 
-    isDragging = true;
+    isMouseDown = true;
 
     startX = e.clientX;
 });
 
 overlay.addEventListener("mouseup", e => {
 
-    if (!isDragging) return;
+    if (!isMouseDown) return;
 
     let endX = e.clientX;
 
-    // kéo trái
-    if (startX - endX > 60) {
+    handleSwipe(endX);
 
-        zoomIndex =
-        (zoomIndex + 1) % images.length;
-
-        updateZoomImage();
-    }
-
-    // kéo phải
-    else if (endX - startX > 60) {
-
-        zoomIndex =
-        (zoomIndex - 1 + images.length)
-        % images.length;
-
-        updateZoomImage();
-    }
-
-    isDragging = false;
+    isMouseDown = false;
 });
-
 /* ===== KEYBOARD ===== */
 
-document.addEventListener("keydown", e => {
-
+overlay.addEventListener("keydown", e => {
     // mũi tên phải
     if (e.key === "ArrowRight") {
 
@@ -407,11 +391,13 @@ function handleSwipe(endX) {
 
     overlay.addEventListener("click", (e) => {
 
-        if (e.target === overlay) {
+    // nếu đang drag thì không đóng
+    if (isMouseDown) return;
 
-            overlay.remove();
-        }
-    });
+    if (e.target === overlay) {
+
+        overlay.remove();
+    }
 });
         images.forEach(img => img.classList.remove("active"));
         images[0].classList.add("active");
